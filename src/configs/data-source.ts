@@ -1,15 +1,16 @@
 import { DataSource } from 'typeorm';
-import "reflect-metadata";
+import dotenv from 'dotenv';
+dotenv.config();
 
 const AppDataSource = new DataSource({
-    type: "mysql",
-    host: "localhost",
-    port: 3306,
-    username: "root",
-    password: "1234",
-    database: "fragments",
-    synchronize: true,
-    logging: false,
+    type: 'mysql',
+    host: process.env.DB_HOST,
+    port: +process.env.DB_PORT,
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    synchronize: !!process.env.DB_SYNCHRONIZE,
+    logging: !!process.env.DB_LOGGING,
     entities: ["dist/src/models/*.js"],
     migrations: ["dist/src/migrations/*.js"],
 })
