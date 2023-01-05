@@ -1,6 +1,5 @@
 import User from "../models/user.model";
 import AppDataSource from "../configs/data-source";
-import {validate} from "class-validator";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 dotenv.config();
