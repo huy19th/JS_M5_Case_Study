@@ -1,12 +1,18 @@
 import DataSource from "./src/configs/data-source";
-import Album from "./src/models/album.model";
-import Artist from "./src/models/artist.model";
-import Genre from "./src/models/genre.model";
-import Playlist from "./src/models/playlist.model";
-import Song from "./src/models/song.model";
-import Subscription from "./src/models/subscription.model";
-import SubscriptionDetail from "./src/models/subscriptionDetail.model";
-import User from "./src/models/user.model";
+import express from "express";
+import dotenv from "dotenv";
+import authRouter from "./src/routers/auth.router";
+
+dotenv.config();
+const app = express();
+const PORT = process.env.APP_PORT;
+
+app.use('/api/auth', authRouter);
+// app.use('/api/user', userRouter);
+// app.use('/api/music', musicRouter);
+// app.use('/api/playlist', playlistRouter);
+// app.use('/api/admin', adminRouter);
+// app.use('/api/subscription', subscriptionRouter);
 
 DataSource.initialize()
 .then(() => {
@@ -16,12 +22,7 @@ DataSource.initialize()
     console.error("Error during Data Source initialization", err)
 });
 
+app.listen(PORT, () => {
+    console.log(`Server is listening on ${PORT}`)
+})
 
-const albumRepository = DataSource.getRepository(Album);
-const artistRepository = DataSource.getRepository(Artist);
-const genreRepository = DataSource.getRepository(Genre);
-const playlistRepository = DataSource.getRepository(Playlist);
-const songRepository = DataSource.getRepository(Song);
-const subscriptionRepository = DataSource.getRepository(Subscription);
-const subscriptiondetailRepository = DataSource.getRepository(SubscriptionDetail);
-const userRepository = DataSource.getRepository(User);
