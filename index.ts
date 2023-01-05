@@ -3,6 +3,8 @@ import express from "express";
 import dotenv from "dotenv";
 import authRouter from "./src/routers/auth.router";
 
+import adminSubscriptionRouter from "./src/routers/admin/subscription.router";
+
 dotenv.config();
 const app = express();
 const PORT = process.env.APP_PORT;
@@ -13,6 +15,8 @@ app.use('/api/auth', authRouter);
 // app.use('/api/playlist', playlistRouter);
 // app.use('/api/admin', adminRouter);
 // app.use('/api/subscription', subscriptionRouter);
+
+app.use('/api/admin/subscription', adminSubscriptionRouter);
 
 DataSource.initialize()
 .then(() => {
