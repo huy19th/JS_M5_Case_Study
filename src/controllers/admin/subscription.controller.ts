@@ -16,6 +16,7 @@ class SubscriptionController {
         try {
             await subRepo.save(subscription);
             res.status(200).json({...subscription})
+
         }
         catch (err) {
             let { sqlMessage } = err;
