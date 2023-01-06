@@ -1,15 +1,18 @@
 import User from "../models/user.model";
 import AppDataSource from "../configs/data-source";
+import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 dotenv.config();
 
-let len = +process.env.PW_ENCRYPTION_LENGTH;
+const len = +process.env.PW_ENCRYPTION_LENGTH;
+const key = +process.env.JWT_KEY;
+
 class AuthController {
     showRegisterForm(req, res) {
         res.status(200).json({ title: 'registration form' })
     }
-    async register(req, res, next) {
+    async register(req, res) {
         const userRepo = await AppDataSource.getRepository(User);
         let { email, password, name } = req.body;
 
@@ -39,6 +42,14 @@ class AuthController {
         let user = await userRepo.findOneBy({ email: email });
         let match = await bcrypt.compare(password, user.password);
         if (match) {
+            let payload = {
+                id: user.id
+            }
+            let token = jwt.sign(payload, key, { expiresIn: '24h' });
+            res.cookie('token', token, {
+                httpOnly: true,
+                maxAge: 24 * 60 * 60 * 1000
+            })
             res.status(200).json(user);
         }
         else {

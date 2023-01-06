@@ -16,7 +16,7 @@ class Song {
     artists: Artist[]
     @Column({type: 'date'})
     released: Date;
-    @Column({type: 'tinyint', width: 2})
+    @Column({type: 'tinyint', width: 2, default: null})
     '#': number;
     @ManyToMany(() => Genre)
     @JoinTable({name: 'genre_detail'})
