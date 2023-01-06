@@ -3,14 +3,17 @@ import express from "express";
 import dotenv from "dotenv";
 import authRouter from "./src/routers/auth.router";
 import songService from "./src/routers/admin/music.router"
+import artistRouter from "./src/routers/admin/artist.router";
+import albumRouter from "./src/routers/admin/album.router";
 
 import adminSubscriptionRouter from "./src/routers/admin/subscription.router";
 
 dotenv.config();
 const app = express();
 const PORT = process.env.APP_PORT;
-
 app.use('/api/auth', authRouter);
+app.use('/api/admin/artist',artistRouter)
+app.use('/api/admin/album',albumRouter);
 // app.use('/api/user', userRouter);
 // app.use('/api/music', musicRouter);
 // app.use('/api/playlist', playlistRouter);
