@@ -7,23 +7,11 @@ class SubscriptionController {
     showSubscriptionAddForm(req, res) {
         res.status(200).json({ title: 'subscription add form' });
     }
-    async addSubscription(req, res) {
-        let { name, duration, price } = req.body;
-        let subscription = new Subscription();
-        subscription.name = name ? name : null;
-        subscription.duration = duration ? duration : null;
-        subscription.price = price ? price : null;
-        try {
-            await subRepo.save(subscription);
-            res.status(200).json({ ...subscription })
-
-        }
-        catch (err) {
-            let { sqlMessage } = err;
-            res.status(500).json({ message: sqlMessage })
-        }
+    async getAllSubscriptions(req, res) {
+        let subscriptions = await subRepo.find();
+        res.status(200).json(subscriptions);
     }
-    async getSubscriptionInfo(req, res) {
+    async getSubscription(req, res) {
         let id = req.params.id;
         let subscription = await subRepo.findOneBy({ id: id });
         if (subscription) {
@@ -33,7 +21,22 @@ class SubscriptionController {
             res.status(404).json({ message: 'not found' })
         }
     }
-    async editSubscriptionInfo(req, res) {
+    async addSubscription(req, res) {
+        let { name, duration, price } = req.body;
+        let subscription = new Subscription();
+        subscription.name = name ? name : null;
+        subscription.duration = duration ? duration : null;
+        subscription.price = price ? price : null;
+        try {
+            await subRepo.save(subscription);
+            res.status(200).json(subscription)
+        }
+        catch (err) {
+            let { sqlMessage } = err;
+            res.status(500).json({ message: sqlMessage })
+        }
+    }
+    async updateSubscription(req, res) {
         let id = req.params.id;
         let subscription = await subRepo.findOneBy({ id: id });
         let { name, duration, price } = req.body;
@@ -55,10 +58,6 @@ class SubscriptionController {
         subscription.active = subscription.active ? 0 : 1;
         await subRepo.save(subscription);
         res.status(200).json(subscription);
-    }
-    async showAllSubscriptions(req, res) {
-        let subscriptions = await subRepo.find();
-        res.status(200).json(subscriptions);
     }
 }
 
