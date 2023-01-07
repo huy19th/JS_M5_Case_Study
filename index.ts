@@ -2,7 +2,7 @@ import DataSource from "./src/configs/data-source";
 import express from "express";
 import dotenv from "dotenv";
 import authRouter from "./src/routers/auth.router";
-import songService from "./src/routers/admin/music.router"
+import songService from "./src/routers/admin/song.router"
 import artistRouter from "./src/routers/admin/artist.router";
 import albumRouter from "./src/routers/admin/album.router";
 
@@ -21,6 +21,9 @@ app.use('/api/admin/album',albumRouter);
 // app.use('/api/subscription', subscriptionRouter);
 app.use('/api/admin/song', songService);
 app.use('/api/admin/subscription', adminSubscriptionRouter);
+app.use((req, res, next, err) => {
+    res.status(500).json(err);
+})
 
 DataSource.initialize()
 .then(() => {
