@@ -4,14 +4,12 @@ import artistController from "../../controllers/admin/artist.controller";
 let upload = multer();
 let router = express.Router();
 
-router.get('/list',artistController.showArtist)
+router.get('/',artistController.getAllArtists)
+router.get('/:id',artistController.getArtist)
 router.get('/showAdd',artistController.showAddArtist)
-router.post('/add',artistController.addArtist)
 router.get('/showUpdate',artistController.showUpdate)
-router.post('/update',artistController.updateArtist);
-
-
-
+router.post('/',artistController.addArtist)
+router.put('/:id',artistController.updateArtist);
 
 export default router;
 

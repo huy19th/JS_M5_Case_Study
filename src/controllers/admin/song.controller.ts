@@ -36,7 +36,7 @@ class SongController {
             res.status(200).json(req.body);
         }
         catch (err) {
-            res.status(500).json({ title: err.message })
+            res.status(500).json({ message: err.sqlMessage })
         }
 
     }
@@ -45,7 +45,6 @@ class SongController {
         try {
             let song = await songRepo.findOneBy({ id: req.params.id });
             song = { ...song, ...req.body };
-            console.log(req.body)
             await songRepo.save(song);
             res.status(200).json(song)
         }
