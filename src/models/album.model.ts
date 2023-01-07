@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinTable} from 'typeorm';
 import Song from './song.model';
 import Artist from './artist.model';
 
@@ -13,6 +13,7 @@ class Album {
     @Column({type: Date})
     released: Date;
     @OneToMany(() => Song, (song) => song.album)
+    @JoinTable()
     songs: Song[]
 }
 
