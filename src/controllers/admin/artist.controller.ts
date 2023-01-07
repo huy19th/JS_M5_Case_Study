@@ -1,20 +1,28 @@
 import Artist from "../../models/artist.model";
 import AppDataSource from "../../configs/data-source";
 
-
-let artistRepo = AppDataSource.getRepository(Artist);
+const artistRepo = AppDataSource.getRepository(Artist);
 
 class ArtistController {
-    async showArtist(req,res,next) {
+    async getAllArtists(req, res) {
         try{
-            let artist = await artistRepo.find()
-            res.status(200).json(artist)
+            let artists = await artistRepo.find()
+            res.status(200).json({data: artists})
         }
-        catch (e){
-            res.status(404).json(e.message)
+        catch(err) {
+            res.status(404).json(err.message)
         }
     }
-    async showAddArtist(req,res,next) {
+    async getArtist(req, res) {
+        let artist = await artistRepo.findOneBy({id: req.params.id});
+        if (artist) {
+            res.status(200).json({data: artist});
+        }
+        else {
+            res.status(404).json({message: 'not found'});
+        }
+    }
+    async showAddArtist(req, res) {
         try{
             res.status(200).json({title : "show add artist"})
         }
@@ -22,8 +30,8 @@ class ArtistController {
             res.status(404).json(e.message);
         }
     }
-    async addArtist(req,res,next) {
-        let{name,biography} = await req.body
+    async addArtist(req, res) {
+        let {name, biography} = req.body
         let artist = new Artist();
         artist.name = name ? name : null;
         artist.biography = biography ? biography : null;
@@ -31,8 +39,8 @@ class ArtistController {
             await artistRepo.save(artist);
             res.status(200).json(artist);
         }
-        catch (e){
-            res.status(404).json(e.message);
+        catch (err){
+            res.status(500).json(err);
         }
     }
     async showUpdate(req,res,next) {
@@ -43,19 +51,19 @@ class ArtistController {
            res.status(404).json(e.message)
         }
     }
-    async updateArtist(req,res,next) {
+    async updateArtist(req, res) {
         try{
-            let data = req.body
+            let {name, biography} = req.body
             let artist = {
-                name : data.name,
-                biography : data.biography
+                name : name ? name : null,
+                biography : biography ? biography: null
             }
             await artistRepo.createQueryBuilder()
                 .update(artist).set(req.params.id.artist);
             res.status(200).json({title: "update artist"})
         }
-        catch (e){
-            res.status(404).json(e.message)
+        catch(err) {
+            res.status(404).json({message: err.message});
         }
     }
 
