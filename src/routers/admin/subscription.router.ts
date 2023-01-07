@@ -5,12 +5,12 @@ import multer from "multer";
 let upload = multer()
 let router = express.Router();
 
-router.get('/list', subscriptionController.showAllSubscriptions)
+router.get('/', subscriptionController.getAllSubscriptions)
 router.get('/add', subscriptionController.showSubscriptionAddForm);
 router.post('/add', upload.none(), subscriptionController.addSubscription);
 
-router.get('/info/:id', subscriptionController.getSubscriptionInfo);
-router.put('/info/:id', upload.none(), subscriptionController.editSubscriptionInfo);
-router.patch('/info/:id', upload.none(), subscriptionController.showHideSubscription);
+router.get('/:id', subscriptionController.getSubscription);
+router.put('//:id', upload.none(), subscriptionController.updateSubscription);
+router.patch('/:id', upload.none(), subscriptionController.showHideSubscription);
 
 export default router;
