@@ -4,11 +4,12 @@ import albumController from "../../controllers/admin/album.controller";
 let upload = multer();
 let router = express.Router();
 
-router.get('/list', albumController.albumList);
+router.get('/', albumController.getAllAlbums);
 router.get('/showAdd', albumController.showAddAlbum);
-router.get('/showUpdate', albumController.showUpdate)
-router.post('add', albumController.addAlbum);
-router.post('update', albumController.updateAlbum);
+router.get('/showUpdate', albumController.showUpdate);
+router.get('/:id', albumController.getAlbum);
+router.post('/', upload.none(), albumController.addAlbum);
+router.post('/', albumController.updateAlbum);
 
 export default router;
 
