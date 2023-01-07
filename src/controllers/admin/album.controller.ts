@@ -5,11 +5,19 @@ let albumRepo =  AppDataSource.getRepository(AlbumModel);
 
 
 class AlbumController{
-    async albumList(req,res){
-        let album = await albumRepo.find();
-        res.status(200).json(album);
+    async getAllAlbums(req, res) {
+        let albums = await albumRepo.find();
+        res.status(200).json({data: albums});
     }
-
+    async getAlbum(req, res) {
+        let album = await albumRepo.findOneBy({id : req.params.id});
+        if (album) {
+            res.status(200).json({data: album});
+        }
+        else {
+            res.status(404).json({error: 'not found'});
+        }
+    }
     async showAddAlbum(req, res){
         try{
             res.status(200).json({title : 'showAdd Album'})
@@ -19,7 +27,7 @@ class AlbumController{
         }
     }
     async addAlbum(req, res){
-        let {name,released,artisId} = await req.body
+        let {name, released, artisId} = req.body;
         let album = new AlbumModel();
         album.name = name ?  name : null;
         album.released = released ? released : null;
@@ -29,13 +37,12 @@ class AlbumController{
             res.status(200).json(album);
         }
         catch(err){
-            res.status(500).json(err.message);
+            res.status(500).json({error: err.sqlMessage});
         }
     }
     async showUpdate(req, res){
         try{
-            res.status(200).json({title : "showUpdate Success"})
-
+            res.status(200).json({title : "showUpdate form"})
         }
         catch(err){
             res.status(500).json(err.message);
@@ -43,17 +50,17 @@ class AlbumController{
     }
     async updateAlbum(req, res){
         try{
-            let data = req.body
+            let {name, released, artistId} = req.body;
             let album = {
-                name : data.name,
-                released : data.released,
-                artist : data.artist
+                name : name ? name : null,
+                released : released ? released : null,
+                artistId : artistId ? artistId : null
             }
             await albumRepo.createQueryBuilder().update(album).set(req.params.id.album);
-            res.status(200).json({title:"update success"})
+            res.status(200).json({message: "update success"})
         }
-        catch (e){
-            res.status(500).json({title:"update error"});
+        catch (err){
+            res.status(500).json({error: err.sqlMessage});
         }
     }
 }
