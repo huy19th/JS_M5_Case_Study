@@ -6,13 +6,13 @@ import PlaylistDetail from './playlistDetail.model';
 @Entity()
 class Playlist {
     @PrimaryGeneratedColumn({type: 'int'})
-    id: number;
+    readonly id: number;
     @Column({type: 'nvarchar', length: 100})
     name: string;
     @ManyToOne(() => User, user => user.playlists)
     @JoinTable()
     user: User;
-    @OneToMany(() => PlaylistDetail, playlistDetail => playlistDetail.playlistId)
+    @OneToMany(() => PlaylistDetail, playlistDetail => playlistDetail.playlist)
     songs: PlaylistDetail[];
     @Column({type: 'boolean', default: 1})
     private: number;

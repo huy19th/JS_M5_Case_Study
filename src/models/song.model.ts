@@ -23,7 +23,7 @@ class Song {
     @ManyToMany(() => Genre)
     @JoinTable({ name: 'genre_detail' })
     genres: Genre[];
-    @OneToMany(() => PlaylistDetail, playlistDetail => playlistDetail.songId)
+    @OneToMany(() => PlaylistDetail, playlistDetail => playlistDetail.song)
     playlists: PlaylistDetail[];
     @Column({ type: 'nvarchar', length: 500, default: null })
     image: string;

@@ -1,18 +1,15 @@
-import { Entity, PrimaryColumn, Generated, Column, OneToOne, ManyToOne, ManyToMany , JoinTable, JoinColumn, OneToMany} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, ManyToOne} from 'typeorm';
 import Playlist from './playlist.model';
 import Song from './song.model';
 
 @Entity()
 class PlaylistDetail {
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn()
+    id: number;
     @ManyToOne(() => Playlist, playlist => playlist.songs)
-    playlistId: Playlist;
-    @PrimaryColumn()
+    playlist: Playlist;
     @ManyToOne(() => Song, song => song.playlists)
-    songId: Song;
-    @Column({type: 'int'})
-    @Generated('increment')
-    '#': number;
+    song: Song;
 }
 
 export default PlaylistDetail;
