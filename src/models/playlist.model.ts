@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinTable, ManyToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinTable, OneToMany } from 'typeorm';
 import Song from './song.model';
 import User from './user.model';
+import PlaylistDetail from './playlistDetail.model';
 
 @Entity()
 class Playlist {
@@ -11,9 +12,10 @@ class Playlist {
     @ManyToOne(() => User, user => user.playlists)
     @JoinTable()
     user: User;
-    @ManyToMany(() => Song, song => song.playlists)
-    @JoinTable({name: 'playlist_detail'})
-    songs: Song[];
+    @OneToMany(() => PlaylistDetail, playlistDetail => playlistDetail.playlistId)
+    songs: PlaylistDetail[];
+    @Column({type: 'boolean', default: 1})
+    private: number;
 }
 
 export default Playlist;
