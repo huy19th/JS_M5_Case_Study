@@ -3,14 +3,17 @@ import AlbumModel from "../../models/album.model";
 
 let albumRepo =  AppDataSource.getRepository(AlbumModel);
 
-
 class AlbumController{
     async getAllAlbums(req, res) {
         let albums = await albumRepo.find();
         res.status(200).json({data: albums});
     }
     async getAlbum(req, res) {
-        let album = await albumRepo.findOneBy({id : req.params.id});
+        let album = await albumRepo
+        .createQueryBuilder('album')
+        .where('album.id = :id', {id: req.params.id})
+        .printSql()
+        .getRawMany();
         if (album) {
             res.status(200).json({data: album});
         }
