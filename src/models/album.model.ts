@@ -15,6 +15,8 @@ class Album {
     @OneToMany(() => Song, (song) => song.album)
     @JoinTable()
     songs: Song[]
+    @Column({type: 'nvarchar', length: 500, default: null})
+    image: string;
 }
 
 export default Album
