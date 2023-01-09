@@ -19,7 +19,9 @@ class Artist {
     @Column({ type: 'nvarchar', length: 100, default: null })
     image: string;
     @OneToMany(() => Album, album => album.artist)
-    albums: Album[]
+    albums: Album[];
+    @Column({type: 'boolean', default: 1})
+    active: number;
 }
 
 export default Artist;
