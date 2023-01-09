@@ -4,6 +4,7 @@ import Artist from './artist.model';
 import Genre from './genre.model';
 import Country from './country.model';
 import PlaylistDetail from './playlistDetail.model';
+import Listen from './listen.models';
 
 @Entity()
 class Song {
@@ -30,9 +31,9 @@ class Song {
     file: string;
     @ManyToOne(() => Country, country => country.songs)
     country: Country;
-    @Column({type: 'int', default: 0})
-    listens: number;
-    @Column({type: 'boolean', default: 1})
+    @OneToMany(() => Listen, listen => listen.song)
+    listens: Listen[];
+    @Column({ type: 'boolean', default: 1 })
     active: number;
 }
 

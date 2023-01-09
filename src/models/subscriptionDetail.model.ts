@@ -4,7 +4,7 @@ import User from './user.model';
 
 @Entity()
 class SubscriptionDetail {
-    @PrimaryGeneratedColumn({type: 'int'})
+    @PrimaryGeneratedColumn({ type: 'int' })
     id: number;
     @OneToOne(() => User)
     @JoinColumn()
@@ -12,7 +12,7 @@ class SubscriptionDetail {
     @ManyToOne(() => Subscription, subscription => subscription.subscriptionsDetails)
     @JoinColumn()
     type: Subscription;
-    @Column({type: Date})
+    @Column({ type: Date })
     expire: Date;
 }
 

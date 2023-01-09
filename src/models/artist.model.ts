@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, ManyToMany, JoinTable, OneToMany, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, OneToMany, ManyToOne } from 'typeorm';
 import Album from './album.model';
 import Country from './country.model';
 import Song from './song.model';
@@ -20,7 +20,7 @@ class Artist {
     image: string;
     @OneToMany(() => Album, album => album.artist)
     albums: Album[];
-    @Column({type: 'boolean', default: 1})
+    @Column({ type: 'boolean', default: 1 })
     active: number;
 }
 

@@ -1,12 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import Song from './song.model';
 import Artist from './artist.model';
 
 @Entity()
 class Country {
-    @PrimaryGeneratedColumn({type: 'int'})
+    @PrimaryGeneratedColumn({ type: 'int' })
     readonly id: number;
-    @Column({type: 'nvarchar', length: 50})
+    @Column({ type: 'nvarchar', length: 50 })
     name: string;
     @OneToMany(() => Song, song => song.country)
     songs: Song[];

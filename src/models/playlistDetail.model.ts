@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import Playlist from './playlist.model';
 import Song from './song.model';
 
