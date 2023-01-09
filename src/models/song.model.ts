@@ -2,7 +2,6 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, ManyToMan
 import Album from './album.model';
 import Artist from './artist.model';
 import Genre from './genre.model';
-import Playlist from './playlist.model';
 import Country from './country.model';
 import PlaylistDetail from './playlistDetail.model';
 
@@ -31,8 +30,10 @@ class Song {
     file: string;
     @ManyToOne(() => Country, country => country.songs)
     country: Country;
-    @Column({ type: 'int' })
+    @Column({type: 'int', default: 0})
     listens: number;
+    @Column({type: 'boolean', default: 1})
+    active: number;
 }
 
 export default Song;

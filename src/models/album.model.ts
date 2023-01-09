@@ -17,6 +17,8 @@ class Album {
     songs: Song[]
     @Column({type: 'nvarchar', length: 500, default: null})
     image: string;
+    @Column({type: 'boolean', default: 1})
+    active: number;
 }
 
 export default Album
