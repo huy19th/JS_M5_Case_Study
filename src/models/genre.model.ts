@@ -1,11 +1,11 @@
-import { Entity, PrimaryColumn, ManyToMany , JoinTable, Column} from 'typeorm';
+import { Entity, PrimaryColumn, ManyToMany, JoinTable, Column } from 'typeorm';
 import Song from './song.model';
 
 @Entity()
 class Genre {
-    @PrimaryColumn({type: 'int'})
+    @PrimaryColumn({ type: 'int' })
     id: number
-    @Column({type: 'nvarchar', length: 100, nullable: false})
+    @Column({ type: 'nvarchar', length: 100, nullable: false })
     name: string
     @ManyToMany(() => Song)
     songs: Song[]
