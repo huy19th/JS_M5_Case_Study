@@ -42,14 +42,14 @@ class AuthController {
         let user = await userRepo.findOneBy({ email: email });
         let match = await bcrypt.compare(password, user.password);
         if (match) {
-            let payload = {
-                id: user.id
-            }
-            let token = jwt.sign(payload, key, { expiresIn: '24h' });
-            res.cookie('token', token, {
-                httpOnly: true,
-                maxAge: 24 * 60 * 60 * 1000
-            })
+            // let payload = {
+            //     id: user.id
+            // }
+            // let token = jwt.sign(payload, key, { expiresIn: '24h' });
+            // res.cookie('token', token, {
+            //     httpOnly: true,
+            //     maxAge: 24 * 60 * 60 * 1000
+            // })
             res.status(200).json(user);
         }
         else {

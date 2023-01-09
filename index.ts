@@ -22,7 +22,8 @@ app.use('/api/admin/album',albumRouter);
 app.use('/api/admin/song', songService);
 app.use('/api/admin/subscription', adminSubscriptionRouter);
 app.use((req, res, next, err) => {
-    res.status(500).json(err);
+    console.log('error happened');
+    res.end();
 })
 
 DataSource.initialize()
