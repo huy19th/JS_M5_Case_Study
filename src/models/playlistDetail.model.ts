@@ -8,7 +8,10 @@ class PlaylistDetail {
     id: number;
     @ManyToOne(() => Playlist, playlist => playlist.songs)
     playlist: Playlist;
-    @ManyToOne(() => Song, song => song.playlists)
+    @ManyToOne(() => Song, song => song.playlists, {
+        onDelete: 'CASCADE'
+    })
+
     song: Song;
 }
 
