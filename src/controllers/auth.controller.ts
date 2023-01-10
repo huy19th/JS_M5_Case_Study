@@ -9,9 +9,6 @@ const len = +process.env.PW_ENCRYPTION_LENGTH;
 const key = process.env.JWT_KEY;
 
 class AuthController {
-    showRegisterForm(req, res) {
-        res.status(200).json({ title: 'registration form' })
-    }
     async register(req, res) {
         const userRepo = await AppDataSource.getRepository(User);
         let { email, password, name } = req.body;
@@ -33,13 +30,13 @@ class AuthController {
             res.status(500).json({ message: message })
         }
     }
-    showLoginForm(req, res) {
-        res.status(200).json({ title: 'login form' })
-    }
     async login(req, res) {
         const userRepo = await AppDataSource.getRepository(User);
         let {email, password} = req.body;
         let user = await userRepo.findOneBy({ email: email });
+        if (user) {
+            return res.status(401).json({message: 'Invalid Credentials'});
+        }
         let match = await bcrypt.compare(password, user.password);
         if (match) {
             let payload = {
@@ -50,10 +47,10 @@ class AuthController {
                 httpOnly: true,
                 maxAge: 24 * 60 * 60 * 1000
             })
-            res.status(200).json(user);
+            res.status(200).json({message: 'Connected'});
         }
         else {
-            res.status(401).json({message: 'Invalid Credentials'})
+            res.status(401).json({message: 'Invalid Credentials'});
         }
         
     }
