@@ -1,7 +1,11 @@
 import AppDataSource from "../../configs/data-source";
-import AlbumModel from "../../models/album.model";
+import Album from "../../models/album.model";
+import Artist from "../../models/artist.model";
+import Song from "../../models/song.model";
 
-let albumRepo =  AppDataSource.getRepository(AlbumModel);
+let albumRepo =  AppDataSource.getRepository(Album);
+let artistRepo = AppDataSource.getRepository(Artist);
+let songRepo = AppDataSource.getRepository(Song);
 
 class AlbumController{
     async getAllAlbums(req, res) {
@@ -21,34 +25,23 @@ class AlbumController{
             res.status(404).json({error: 'not found'});
         }
     }
-    async showAddAlbum(req, res){
-        try{
-            res.status(200).json({title : 'showAdd Album'})
-        }
-        catch(err){
-            res.status(500).json(err.message)
-        }
-    }
     async addAlbum(req, res){
-        let {name, released, artisId} = req.body;
-        let album = new AlbumModel();
-        album.name = name ?  name : null;
+        let {name, released, artistName, image} = req.body;
+        let artist = await artistRepo.findOneBy({name: artistName})
+        if (!artist) {
+            return res.status(500).json({message: 'Artist Not Found'});
+        }
+        let album = new Album();
+        album.name = name ? name : null;
         album.released = released ? released : null;
-        album.artist = artisId ? artisId : null;
+        album.artist = artist;
+        album.image = image ? image : null
         try{
             await albumRepo.save(album);
             res.status(200).json(album);
         }
         catch(err){
-            res.status(500).json({error: err.sqlMessage});
-        }
-    }
-    async showUpdate(req, res){
-        try{
-            res.status(200).json({title : "showUpdate form"})
-        }
-        catch(err){
-            res.status(500).json(err.message);
+            res.status(500).json({message: err.sqlMessage});
         }
     }
     async updateAlbum(req, res){
@@ -65,6 +58,19 @@ class AlbumController{
         catch (err){
             res.status(500).json({error: err.sqlMessage});
         }
+    }
+    async deleteAlbum(req, res) {
+        await AppDataSource.createQueryBuilder()
+        .update(Album)
+        .set({active: 0})
+        .where('id = :id', {id: req.params.id})
+        .execute();
+        await AppDataSource.createQueryBuilder()
+        .update(Song)
+        .set({active: 0})
+        .where('albumId = :id', {id: req.params.id})
+        .execute();
+        res.end();
     }
 }
 let albumController = new AlbumController();
