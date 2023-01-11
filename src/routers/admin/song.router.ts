@@ -1,14 +1,9 @@
 import express from "express";
-import multer from "multer";
-import Song from "src/models/song.model";
 import SongController from "../../controllers/admin/song.controller";
 import firebase from "../../middlewares/firebase";
+import {upload, multipleUpload} from "../../configs/multer"
 
-
-let upload = multer({storage: multer.memoryStorage()});
-let multipleUpload = upload.fields([{name: 'image', maxCount: 1}, {name: 'file', maxCount: 1}])
 let router = express.Router();
-
 
 router.get('/', SongController.getAllSongs);
 router.get('/:id', SongController.getSong);
