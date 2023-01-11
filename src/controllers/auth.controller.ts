@@ -34,7 +34,7 @@ class AuthController {
         const userRepo = await AppDataSource.getRepository(User);
         let {email, password} = req.body;
         let user = await userRepo.findOneBy({ email: email });
-        if (user) {
+        if (!user) {
             return res.status(401).json({message: 'Invalid Credentials'});
         }
         let match = await bcrypt.compare(password, user.password);
