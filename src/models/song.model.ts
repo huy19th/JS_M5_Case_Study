@@ -14,7 +14,8 @@ class Song {
     title: string;
     @ManyToOne(() => Album, (album) => album.songs)
     album: Album;
-    @ManyToMany(() => Artist)
+    @ManyToMany(() => Artist, artist => artist.songs)
+    @JoinTable({ name: 'contributing_artists' })
     artists: Artist[]
     @Column({ type: 'date' })
     released: Date;
