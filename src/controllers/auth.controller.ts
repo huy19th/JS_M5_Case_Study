@@ -1,5 +1,6 @@
 import User from "../models/user.model";
 import AppDataSource from "../configs/data-source";
+import SubscriptionDetail from "../models/subscriptionDetail.model";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
@@ -11,13 +12,11 @@ const key = process.env.JWT_KEY;
 class AuthController {
     async register(req, res) {
         const userRepo = await AppDataSource.getRepository(User);
-        let { email, password, name } = req.body;
-
+        let { email, password, name} = req.body;
         let user = new User();
         user.email = email ? email : null;
         user.password = password ? password : null;
         user.name = name || '';
-
         try {
             await userRepo.save(user);
             user.password = await bcrypt.hash(password, len);
@@ -26,8 +25,7 @@ class AuthController {
         }
         catch (err) {
             let { sqlMessage } = err;
-            let message = sqlMessage.replace('Column ', '');
-            res.status(500).json({ message: message })
+            res.status(500).json({ message: sqlMessage })
         }
     }
     async login(req, res) {

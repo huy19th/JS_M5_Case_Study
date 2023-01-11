@@ -10,7 +10,8 @@ import checkAuthentication from "./src/middlewares/checkAuthentication";
 import checkAuthorization from "./src/middlewares/checkAuthorization";
 import cookieParser from "cookie-parser";
 import playlistRouter from "./src/routers/users/playlist.router";
-
+import buyVipRouter from "./src/routers/users/buyvip.router";
+import searchRouter from "./src/routers/users/search.router";
 dotenv.config();
 const app = express();
 const PORT = process.env.APP_PORT;
@@ -19,7 +20,8 @@ app.use(cookieParser());
 app.use('/api/auth', authRouter);
 app.use(checkAuthentication);
 app.use('/api/playlist', playlistRouter);
-
+app.use('/api/subscription', buyVipRouter);
+app.use('/api/search', searchRouter);
 app.use(checkAuthorization);
 app.use('/api/admin/artist',artistRouter)
 app.use('/api/admin/album',albumRouter);
@@ -27,7 +29,6 @@ app.use('/api/admin/album',albumRouter);
 // app.use('/api/music', musicRouter);
 
 // app.use('/api/admin', adminRouter);
-// app.use('/api/subscription', subscriptionRouter);
 app.use('/api/admin/song', songService);
 app.use('/api/admin/subscription', adminSubscriptionRouter);
 app.use((err, req, res, next) => {
