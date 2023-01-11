@@ -48,6 +48,7 @@ class SongController {
     async addSong(req, res) {
         try {
             let { title, released, no, genre, image, file, albumName, artistName, countryId } = req.body;
+            console.log(req.body);
             let songGenres = [];
             for (let item of genre) {
                 let songGenre = await genreRepo.findOneBy({id: item})
@@ -71,7 +72,7 @@ class SongController {
             song['#'] = no ? no : null;
             song.genres = songGenres;
             song.image = image ? image : null;
-            song.file = 'file';
+            song.file = file ? file : null;
             song.country = country;
             song.artists = [artist];
             
@@ -138,7 +139,7 @@ class SongController {
         }
     }
     test(req, res) {
-            console.log(req.body)
+            console.log(req.files);
             res.end();
         }
     }
