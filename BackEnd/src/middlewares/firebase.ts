@@ -1,7 +1,6 @@
 import admin from "firebase-admin";
 import axios from "axios";
 import dotenv from "dotenv";
-import { MetadataWithSuchNameAlreadyExistsError } from "typeorm";
 dotenv.config();
 
 admin.initializeApp({
