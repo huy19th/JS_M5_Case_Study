@@ -6,11 +6,13 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import Badge from '@mui/material/Badge';
+import DiamondIcon from '@mui/icons-material/Diamond';
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -23,7 +25,33 @@ export default function AccountMenu() {
   };
   return (
     <React.Fragment>
+
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+      <Tooltip title="Vip">
+          <IconButton
+            onClick={handleClick}
+            size="small"
+            sx={{ ml: 2 }}
+          >
+        <Badge badgeContent="vip" color="secondary">
+          <DiamondIcon />
+        </Badge>
+          </IconButton>
+
+        </Tooltip>
+        <Tooltip title="Notifications">
+          <IconButton
+            onClick={handleClick}
+            size="small"
+            sx={{ ml: 2 }}
+          >
+            <Badge badgeContent={17} color="error">
+              <NotificationsIcon sx={{ width: 30, height: 30 }} />
+            </Badge>
+          </IconButton>
+
+        </Tooltip>
+
         <Tooltip title="Account settings">
           <IconButton
             onClick={handleClick}
@@ -33,8 +61,9 @@ export default function AccountMenu() {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{width: 30, height: 30}}/>
+            <Avatar sx={{ width: 30, height: 30 }} />
           </IconButton>
+
         </Tooltip>
       </Box>
       <Menu
