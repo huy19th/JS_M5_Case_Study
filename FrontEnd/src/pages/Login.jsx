@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,8 +10,11 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import axios from 'axios';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom';
 import { postUser } from '../services/login';
+import { login, selectUser } from '../reducers/user'
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -31,8 +33,9 @@ function Copyright(props) {
 }
 
 export default function Login() {
-    const [showPassword, setShowPassword] = useState(false);
-
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const currentUser = useSelector(selectUser);
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -43,8 +46,11 @@ export default function Login() {
             password: Yup.string().required('Password Required')
         }),
         onSubmit: async (values) => {
-            console.log(values);
-            postUser(values)
+            let user = await postUser(values);
+            if (user) {
+                dispatch(login(user));
+                navigate('/');
+            }
         },
     });
 

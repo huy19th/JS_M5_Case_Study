@@ -18,6 +18,7 @@ function App() {
       <ThemeProvider theme={darkTheme}>
       <Routes>
         <Route path="/" element={<Home/>}>
+          <Route path="tabs" element={<Home/>}/>
         </Route>
         <Route path="/login" element={<Login/>} />
       </Routes>
