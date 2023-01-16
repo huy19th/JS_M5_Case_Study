@@ -12,7 +12,7 @@ const key = process.env.JWT_KEY;
 class AuthController {
     async register(req, res) {
         const userRepo = await AppDataSource.getRepository(User);
-        let { email, password, name} = req.body;
+        let { email, password, name } = req.body;
         let user = new User();
         user.email = email ? email : null;
         user.password = password ? password : null;
@@ -30,10 +30,10 @@ class AuthController {
     }
     async login(req, res) {
         const userRepo = await AppDataSource.getRepository(User);
-        let {email, password} = req.body;
+        let { email, password } = req.body
         let user = await userRepo.findOneBy({ email: email });
         if (!user) {
-            return res.status(401).json({message: 'Invalid Credentials'});
+            return res.status(401).json({ message: 'Invalid Credentials' });
         }
         let match = await bcrypt.compare(password, user.password);
         if (match) {
@@ -45,12 +45,18 @@ class AuthController {
                 httpOnly: true,
                 maxAge: 24 * 60 * 60 * 1000
             })
-            res.status(200).json({message: 'Connected'});
+            let info = { ...user };
+            delete info.password;
+            delete info.role;
+            res.status(200).json({
+                user: info,
+                token: token
+            });
         }
         else {
-            res.status(401).json({message: 'Invalid Credentials'});
+            res.status(401).json({ message: 'Invalid Credentials' });
         }
-        
+
     }
 }
 
