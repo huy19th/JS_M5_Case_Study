@@ -70,13 +70,13 @@ export default function MiniDrawer(props) {
     const theme = useTheme();
 
     return (
-        <Box sx={{ display: 'flex' }}>
+        <Box marginLeft={"20%"}>
             <CssBaseline />
             <Drawer variant="permanent" open={props.open}>
                 <DrawerHeader />
                 <Divider />
                 <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+                    {['Cá Nhân'].map((text, index) => (
                         <ListItem key={text} disablePadding sx={{ display: 'block' }}>
                             <ListItemButton
                                 sx={{
