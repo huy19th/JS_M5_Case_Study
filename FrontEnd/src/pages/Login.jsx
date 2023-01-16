@@ -36,6 +36,8 @@ export default function Login() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const currentUser = useSelector(selectUser);
+    const [err, setErr] = useState('');
+
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -46,10 +48,13 @@ export default function Login() {
             password: Yup.string().required('Password Required')
         }),
         onSubmit: async (values) => {
-            let user = await postUser(values);
-            if (user) {
+            try {
+                let user = await postUser(values);
                 dispatch(login(user));
                 navigate('/');
+            }
+            catch (e) {
+                setErr(e.message);
             }
         },
     });
@@ -96,6 +101,7 @@ export default function Login() {
                     {formik.touched.password && formik.errors.password ? (
                         <div>{formik.errors.password}</div>
                     ) : null}
+                    {err ? <div>{err}</div> : null}
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary" />}
                         label="Remember me"

@@ -1,5 +1,4 @@
 import { Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
 import './App.css';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
