@@ -3,6 +3,9 @@ import Home from './pages/Home';
 import './App.css';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import Main from "./pages/Main";
+import LatestSong from "./components/Main/LatestSong";
+import ListSong from "./components/Main/ListSong";
 
 const darkTheme = createTheme({
   palette: {
@@ -10,14 +13,15 @@ const darkTheme = createTheme({
   },
 });
 
-
 function App() {
   return (
     <div className="App">
       <ThemeProvider theme={darkTheme}>
       <Routes>
         <Route path="/" element={<Home/>}>
-          
+          <Route index element={<LatestSong/>}></Route>
+          <Route index element={<ListSong/>}></Route>
+
         </Route>
       </Routes>
       </ThemeProvider>
