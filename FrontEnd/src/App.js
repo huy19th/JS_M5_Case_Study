@@ -3,9 +3,6 @@ import './App.css';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Main from "./pages/Main";
-import LatestSong from "./components/Main/LatestSong";
-import ListSong from "./components/Main/ListSong";
-import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Artist from './pages/Artist';
@@ -23,9 +20,8 @@ function App() {
       <ThemeProvider theme={darkTheme}>
       <Routes>
         <Route path="/" element={<Home/>}>
-          <Route index element={<LatestSong/>}></Route>
-          <Route index element={<ListSong/>}></Route>
-          <Route path="/artist/:artistId" element={<Artist/>}></Route>
+            <Route index element={<Main/>}></Route>
+
         </Route>
         <Route path="/login" element={<Login/>} />
         <Route path="/register" element={<Register/>} />

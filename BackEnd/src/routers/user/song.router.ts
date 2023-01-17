@@ -8,5 +8,6 @@ let router = express.Router();
 router.get('/:id',songController.getSong);
 router.get('/',songController.getAllSongs);
 router.get('/title/*',songController.getSongsByTitle);
-
+router.get('/country/:name',songController.getSongByCountry);
+router.get('/country/not/:name',songController.getSongNotFromCountry);
 export default router;
