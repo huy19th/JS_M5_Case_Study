@@ -1,5 +1,5 @@
 import AppDataSource from "../../configs/data-source";
-import { Like } from "typeorm";
+import { Like, Not, Equal } from "typeorm";
 import Song from "../../models/song.model";
 import Artist from "../../models/artist.model";
 import Album from "../../models/album.model";
@@ -64,7 +64,45 @@ class SongController {
         console.log(req.files);
         res.end();
     }
+    async getSongByCountry(req, res) {
+        let songs = await songRepo.find({
+            relations: {
+                artists: true,
+                album: true
+            },
+            order : {
+              released : "DESC",
+            },
+            where : {
+              country : {
+                  name : req.params.name
+              }
+            },
+            take : 12
+        })
+        res.status(200).json({ data: songs });
+    }
+    async getSongNotFromCountry(req, res) {
+        let songs = await songRepo.find({
+            relations: {
+                artists: true,
+                album: true
+            },
+            order : {
+                released : "DESC",
+            },
+            where : {
+                country : {
+                    name : Not(Equal(req.params.name))
+                }
+            },
+            take : 12
+        })
+        res.status(200).json({ data: songs });
+    }
+
 }
+
 let songController = new SongController()
 
 export default songController;
