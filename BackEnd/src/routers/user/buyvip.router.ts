@@ -1,7 +1,7 @@
 import express from "express";
 import multer from "multer";
 
-import buyVipController from "../../controllers/users/buyVip.controller";
+import buyVipController from "../../controllers/user/buyVip.controller";
 
 let upload = multer();
 let router = express.Router();
