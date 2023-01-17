@@ -5,6 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Main from "./pages/Main";
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Artist from './pages/Artist';
 
 const darkTheme = createTheme({
   palette: {
