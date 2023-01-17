@@ -1,0 +1,70 @@
+import AppDataSource from "../../configs/data-source";
+import { Like } from "typeorm";
+import Song from "../../models/song.model";
+import Artist from "../../models/artist.model";
+import Album from "../../models/album.model";
+import Country from "../../models/country.model";
+import Genre from "../../models/genre.model";
+import qs from "qs";
+
+const songRepo = AppDataSource.getRepository(Song);
+
+class SongController {
+    async getAllSongs(req, res) {
+        let songs = await songRepo.find({
+            relations: {
+                artists: true,
+                album: true
+            },
+            where: {
+                active: 1
+            },
+            take : 12
+        })
+        res.status(200).json({ data: songs });
+    }
+    async getSong(req, res, next) {
+        try {
+            let song = await songRepo.find({
+                relations: {
+                    artists: true,
+                    album: true
+                },
+                where: {
+                    id: req.params.id,
+                    active: 1
+                }
+            })
+            res.status(200).json({ data: song });
+        }
+        catch (err) {
+            next(err);
+        }
+
+    }
+    async getSongsByTitle(req, res) {
+        try {
+            let songs = await songRepo.find({
+                relations: {
+                    album: true,
+                    artists: true
+                },
+                where: {
+                    title: Like(`%${req.query.title}%`),
+                    active: 1
+                }
+            });
+            res.status(200).json({ data: songs });
+        }
+        catch (err) {
+            res.status(500).json({ message: 'Invalid Query' });
+        }
+    }
+    test(req, res) {
+        console.log(req.files);
+        res.end();
+    }
+}
+let songController = new SongController()
+
+export default songController;
