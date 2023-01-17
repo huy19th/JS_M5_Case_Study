@@ -52,7 +52,7 @@ export default function Login() {
         onSubmit: async (values) => {
             try {
                 await postUser(values);
-                console.log('hello2');
+                navigate('/login');
             }
             catch (e) {
                 setErr(e.message);
