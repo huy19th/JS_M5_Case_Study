@@ -5,17 +5,18 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import MLink from '@mui/material/Link';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { postUser } from '../services/login';
-import { login, selectUser } from '../reducers/user'
+import { postUser } from '../services/register';
+
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -35,14 +36,14 @@ function Copyright(props) {
 
 export default function Login() {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const currentUser = useSelector(selectUser);
     const [err, setErr] = useState('');
 
     const formik = useFormik({
         initialValues: {
             email: '',
             password: '',
+            name: '',
+            'image-user': null,
         },
         validationSchema: Yup.object({
             email: Yup.string().email('Invalid email address').required('Email Required'),
@@ -50,9 +51,8 @@ export default function Login() {
         }),
         onSubmit: async (values) => {
             try {
-                let user = await postUser(values);
-                dispatch(login(user));
-                navigate('/');
+                await postUser(values);
+                console.log('hello2');
             }
             catch (e) {
                 setErr(e.message);
@@ -75,14 +75,14 @@ export default function Login() {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Log in
+                    Register
                 </Typography>
                 <Box component="form" onSubmit={formik.handleSubmit} noValidate sx={{ mt: 1 }}>
                     <TextField
                         margin="normal"
                         fullWidth
                         id="email"
-                        label="Email"
+                        label="Email *"
                         name="email"
                         autoFocus
                         {...formik.getFieldProps('email')}
@@ -90,11 +90,15 @@ export default function Login() {
                     {formik.touched.email && formik.errors.email ? (
                         <div>{formik.errors.email}</div>
                     ) : null}
+
+                    {formik.touched.name && formik.errors.name ? (
+                        <div>{formik.errors.name}</div>
+                    ) : null}
                     <TextField
                         margin="normal"
                         fullWidth
                         name="password"
-                        label="Password"
+                        label="Password *"
                         id="password"
                         type="password"
                         {...formik.getFieldProps('password')}
@@ -102,28 +106,45 @@ export default function Login() {
                     {formik.touched.password && formik.errors.password ? (
                         <div>{formik.errors.password}</div>
                     ) : null}
-                    {err ? <div>{err}</div> : null}
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
+                    <TextField
+                        margin="normal"
+                        fullWidth
+                        id="name"
+                        label="Name"
+                        name="name"
+                        {...formik.getFieldProps('name')}
                     />
+                    <label htmlFor="upload-photo">
+                        <input
+                            style={{ display: "none" }}
+                            id="image-user"
+                            name="image-user"
+                            type="file"
+                        />
+                        <Fab
+                            color="secondary"
+                            size="small"
+                            component="span"
+                            aria-label="add"
+                            variant="extended"
+                        >
+                            <AddIcon /> Upload photo
+                        </Fab>
+                    </label>
+                    <br />
+                    {err ? <div>{err}</div> : null}
                     <Button
                         type="submit"
                         fullWidth
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                     >
-                        Log In
+                        Submit
                     </Button>
                     <Grid container>
                         <Grid item xs>
-                            <Link to="#">
-                                Forgot password?
-                            </Link>
-                        </Grid>
-                        <Grid item>
-                            <Link to="/register" >
-                                {"Don't have an account? Regsiter"}
+                            <Link to="/login">
+                                    Already registered? Log In
                             </Link>
                         </Grid>
                     </Grid>

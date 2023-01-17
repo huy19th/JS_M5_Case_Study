@@ -7,6 +7,7 @@ import LatestSong from "./components/Main/LatestSong";
 import ListSong from "./components/Main/ListSong";
 import Home from './pages/Home';
 import Login from './pages/Login';
+import Register from './pages/Register';
 
 const darkTheme = createTheme({
   palette: {
@@ -26,6 +27,7 @@ function App() {
 
         </Route>
         <Route path="/login" element={<Login/>} />
+        <Route path="/register" element={<Register/>} />
       </Routes>
       </ThemeProvider>
     </div>

@@ -12,16 +12,17 @@ const key = process.env.JWT_KEY;
 class AuthController {
     async register(req, res) {
         const userRepo = await AppDataSource.getRepository(User);
-        let { email, password, name } = req.body;
+        let { email, password, name , imageUser} = req.body;
         let user = new User();
         user.email = email ? email : null;
         user.password = password ? password : null;
         user.name = name || '';
+        user.image = imageUser;
         try {
             await userRepo.save(user);
             user.password = await bcrypt.hash(password, len);
             await userRepo.save(user);
-            res.status(200).json(req.body);
+            res.status(200).json({message: 'Registered successfully'});
         }
         catch (err) {
             let { sqlMessage } = err;
