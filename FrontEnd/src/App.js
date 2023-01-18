@@ -3,7 +3,8 @@ import Home from "./pages/Home";
 import Main from "./pages/Main";
 import Search from "./pages/Search";
 import Collection from "./pages/Collection";
-import SubSection from './components/Content/CollectionContent/SubSection';
+import SubSection from "./components/Content/CollectionContent/SubSection";
+import Login from "./pages/Login";
 
 function App() {
   return (
@@ -18,9 +19,10 @@ function App() {
             <Route path='albums' element={<SubSection title={"Album"} />} />
           </Route>
         </Route>
+        <Route path="/login" element={<Login />} />
       </Routes>
     </Router>
   );
 }
 
-export default App;
+export default App
