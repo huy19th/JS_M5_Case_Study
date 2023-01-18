@@ -1,11 +1,13 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Icon } from '../../icons/Icons'
 import { setCurrent } from '../../store/Player'
+import {getSong} from "../../services/ListSong";
+
 
 function CardSection({ item }) {
-
+    // console.log(item)
     const dispatch = useDispatch();
     const {current, playing, controls} = useSelector((state) => state.player)
 
@@ -34,8 +36,14 @@ function CardSection({ item }) {
         }else{
             dispatch(setCurrent(item))
         }
-        
     }
+    const [song,setSongs] =useState([]);
+    useEffect(() =>{
+        getSong().then(result =>{
+            setSongs(result.data)
+        })
+    },[]);
+
 
 
     return (
@@ -47,7 +55,7 @@ function CardSection({ item }) {
             <div>
                 <div className='pt-[100%] mb-4 relative'>
                     <img src={item.image} alt="player-card" className={`absolute inset-0 object-cover w-full h-full ${roundedStyle(item.type)}`} />
-                    <button 
+                    <button
                     onClick={updateCurrent}
                     className={`w-10 h-10 rounded-full bg-primary absolute bottom-2 right-2 items-center justify-center group-hover:flex group-focus:flex ${isCurrentPlaying ? 'flex' : 'hidden' }`}>
                         <Icon name={ isCurrentPlaying ? "pause" : "play"} size={16} />
@@ -57,7 +65,10 @@ function CardSection({ item }) {
                     <h5 className='truncate text-base font-bold font-sans'>
                         {item.title}
                     </h5>
-                    <p className='line-clamp-2 overflow-hidden text-ellipsis whitespace-normal text-link text-sm font-medium font-sans mt-1'>{item.subtitle}</p>
+                    {item.artists.map((element,index)=>(
+                        <p className='line-clamp-2 overflow-hidden text-ellipsis whitespace-normal text-link text-sm font-medium font-sans mt-1' key={index}>{element.name}</p>
+                    ))}
+
                 </div>
             </div>
         </Link>

@@ -19,9 +19,9 @@ class SongController {
             where: {
                 active: 1
             },
-            take : 12
+            take : 5
         })
-        res.status(200).json({ data: songs });
+        res.status(200).json(songs);
     }
     async getSong(req, res, next) {
         try {
@@ -35,7 +35,7 @@ class SongController {
                     active: 1
                 }
             })
-            res.status(200).json({ data: song });
+            res.status(200).json(song);
         }
         catch (err) {
             next(err);
@@ -54,7 +54,7 @@ class SongController {
                     active: 1
                 }
             });
-            res.status(200).json({ data: songs });
+            res.status(200).json(songs);
         }
         catch (err) {
             res.status(500).json({ message: 'Invalid Query' });
@@ -80,7 +80,7 @@ class SongController {
             },
             take : 12
         })
-        res.status(200).json({ data: songs });
+        res.status(200).json(songs);
     }
     async getSongNotFromCountry(req, res) {
         let songs = await songRepo.find({
@@ -96,9 +96,21 @@ class SongController {
                     name : Not(Equal(req.params.name))
                 }
             },
-            take : 12
+            take : 5
         })
-        res.status(200).json({ data: songs });
+        res.status(200).json(songs);
+    }
+    async getTrendSong(req, res) {
+        let songs = await songRepo.find({
+            relations: {
+                artists : true,
+                album : true,
+                listens : true
+            },
+            order :{
+                released : "DESC",
+            }
+        })
     }
 
 }
