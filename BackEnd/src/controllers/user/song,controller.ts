@@ -1,6 +1,7 @@
 import AppDataSource from "../../configs/data-source";
 import { Like, Not, Equal } from "typeorm";
 import Song from "../../models/song.model";
+import Listen from "../../models/listen.models";
 import Artist from "../../models/artist.model";
 import Album from "../../models/album.model";
 import Country from "../../models/country.model";
@@ -8,7 +9,7 @@ import Genre from "../../models/genre.model";
 import qs from "qs";
 
 const songRepo = AppDataSource.getRepository(Song);
-
+const listenRepo = AppDataSource.getRepository(Listen);
 class SongController {
     async getAllSongs(req, res) {
         let songs = await songRepo.find({
@@ -100,17 +101,28 @@ class SongController {
         })
         res.status(200).json(songs);
     }
-    async getTrendSong(req, res) {
-        let songs = await songRepo.find({
+    async getTrendingSongs(req, res) {
+        let listens = await listenRepo.find({
             relations: {
-                artists : true,
-                album : true,
-                listens : true
+                song: {
+                    album: true,
+                    artists: true  }
             },
             order :{
-                released : "DESC",
-            }
+                    year: "DESC",
+                    month: "DESC",
+                    count: "DESC"
+            },
+            take: 5
         })
+
+        let songs = [];
+        listens.forEach(listen => {
+            let song = listen.song;
+            song['listen'] = listen.count;
+            songs.push(song);
+        })
+        res.status(200).json(songs);
     }
 
 }

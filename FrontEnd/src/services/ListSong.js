@@ -11,3 +11,7 @@ export const getSongVietNam = async () => {
 export const getSongNotCountry = async () => {
     return await axios.get("/country/not/Vietnam")
 }
+
+export const getTrendingSong = async () => {
+    return await axios.get("/trendingSongs");
+}

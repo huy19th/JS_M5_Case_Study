@@ -15,6 +15,7 @@ import buyVipRouter from "./src/routers/user/buyvip.router";
 import searchRouter from "./src/routers/user/search.router";
 import songRouter from "./src/routers/user/song.router";
 import aritstRouter from "./src/routers/user/artist.router";
+import albumsRouter from "./src/routers/user/albums.router";
 
 dotenv.config();
 const app = express();
@@ -25,6 +26,7 @@ app.use(cookieParser());
 app.use('/api/auth', authRouter);
 app.use('/api/song', songRouter);
 app.use('/api/artist', aritstRouter);
+app.use('/api/album',albumsRouter)
 app.use(checkAuthentication);
 app.use('/api/playlist', playlistRouter);
 app.use('/api/subscription', buyVipRouter);
