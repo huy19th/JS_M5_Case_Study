@@ -33,6 +33,7 @@ class Song {
     @ManyToOne(() => Country, country => country.songs)
     country: Country;
     @OneToMany(() => Listen, listen => listen.song)
+
     listens: Listen[];
     @Column({ type: 'boolean', default: 1 })
     active: number;

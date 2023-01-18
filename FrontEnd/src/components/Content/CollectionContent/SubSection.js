@@ -16,7 +16,7 @@ function SubSection({ title }) {
                     {
                         pathname.includes('playlist') && (mixer.map(item => <CardSection item={item} key={item.id} />))
                     }
-                    
+
                     {
                         pathname.includes('artist') && (singer.map(item => <CardSection item={item} key={item.id} />))
                     }
