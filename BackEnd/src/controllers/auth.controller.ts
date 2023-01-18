@@ -34,7 +34,7 @@ class AuthController {
         let { email, password } = req.body
         let user = await userRepo.findOneBy({ email: email });
         if (!user) {
-            return res.status(401).json({ message: 'Invalid Credentials' });
+            return res.status(401).json({ message: 'Wrong email or password' });
         }
         let match = await bcrypt.compare(password, user.password);
         if (match) {
@@ -55,7 +55,7 @@ class AuthController {
             });
         }
         else {
-            res.status(401).json({ message: 'Invalid Credentials' });
+            res.status(401).json({ message: 'Wrong email or password' });
         }
 
     }
