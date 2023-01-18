@@ -1,38 +1,26 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import SideBar from "./components/SideBar";
-import Content from "./components/Content";
-import BottomBar from "./components/BottomBar";
-import Home2 from "./pages/Home";
+import Home from "./pages/Home";
 import Main from "./pages/Main";
 import Search from "./pages/Search";
 import Collection from "./pages/Collection";
-
+import SubSection from './components/Content/CollectionContent/SubSection';
 
 function App() {
   return (
     <Router>
-      <div className="main-container">
-        <SideBar />
-        <Content />
-      </div>
-      <BottomBar />
-
-    </Router>
-  );
-}
-
-function App2() {
-  return (
-    <Router>
       <Routes>
-        <Route path="/" element={<Home2 />}>
+        <Route path="/" element={<Home />}>
           <Route index element={<Main />} />
           <Route path='/search' element={<Search />} />
-          <Route path='/collection' element={<Collection />} />
+          <Route path='/collection' element={<Collection />}>
+            <Route path='podcast' element={<SubSection title={"Podcast"} />} />
+            <Route path='artist' element={<SubSection title={"Artist"} />} />
+            <Route path='albums' element={<SubSection title={"Album"} />} />
+          </Route>
         </Route>
       </Routes>
     </Router>
   );
 }
 
-export default App2;
+export default App;
