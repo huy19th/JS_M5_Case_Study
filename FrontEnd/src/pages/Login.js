@@ -27,7 +27,6 @@ export default function Login() {
       try {
         console.log(values);
         let user = await postUser(values);
-        dispatch(login(user));
         navigate('/');
       }
       catch (e) {
