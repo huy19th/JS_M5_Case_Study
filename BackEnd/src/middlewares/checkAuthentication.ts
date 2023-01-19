@@ -7,11 +7,11 @@ dotenv.config();
 const key = process.env.JWT_KEY;
 
 const checkAuthentication = (req, res, next) => {
-    let cookie = req.cookies;
-    if (!cookie.token) {
+    let token = req.headers.token;
+    // console.log(token);
+    if (!token) {
         return res.status(401).json({message: 'Unauthorized'})
     }
-    let token = cookie.token;
     jwt.verify(token, key, async (err, decoded) => {
         if (err) {
             return res.status(401).json({message: 'Unauthorized'})

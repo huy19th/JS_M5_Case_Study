@@ -15,7 +15,7 @@ admin.initializeApp({
 const bucket = admin.storage().bucket();
 
 const uploadFirebase = async (req, res, next) => {
-    if (req.files) return next();
+    if (!Object.keys(req.files).length) return next();
     let files = req.files;
     let fileToBeUploaded = Object.keys(files).length;
     let fileUploaded = 0;

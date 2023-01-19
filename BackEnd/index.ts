@@ -10,6 +10,7 @@ import adminSubscriptionRouter from "./src/routers/admin/subscription.router";
 import checkAuthentication from "./src/middlewares/checkAuthentication";
 import checkAuthorization from "./src/middlewares/checkAuthorization";
 import cookieParser from "cookie-parser";
+import userRouter from "./src/routers/user/user.router";
 import playlistRouter from "./src/routers/user/playlist.router";
 import buyVipRouter from "./src/routers/user/buyvip.router";
 import searchRouter from "./src/routers/user/search.router";
@@ -28,6 +29,7 @@ app.use('/api/song', songRouter);
 app.use('/api/artist', aritstRouter);
 app.use('/api/album',albumsRouter)
 app.use(checkAuthentication);
+app.use('/api/user', userRouter);
 app.use('/api/playlist', playlistRouter);
 app.use('/api/subscription', buyVipRouter);
 app.use('/api/search', searchRouter);
@@ -35,10 +37,6 @@ app.use('/api/search', searchRouter);
 app.use(checkAuthorization);
 app.use('/api/admin/artist',adminArtistRouter)
 app.use('/api/admin/album',albumRouter);
-// app.use('/api/user', userRouter);
-// app.use('/api/music', musicRouter);
-
-// app.use('/api/admin', adminRouter);
 app.use('/api/admin/song', songService);
 app.use('/api/admin/subscription', adminSubscriptionRouter);
 app.use((err, req, res, next) => {
