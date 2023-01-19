@@ -17,7 +17,7 @@ class User {
     name: string;
     @OneToOne(() => SubscriptionDetail)
     subscription: SubscriptionDetail;
-    @Column({ type: 'nvarchar', length: 100, default: null })
+    @Column({ type: 'nvarchar', length: 500, default: null })
     image: string;
     @OneToMany(() => Playlist, playlist => playlist.user)
     @JoinColumn()

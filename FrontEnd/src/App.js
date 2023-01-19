@@ -5,6 +5,7 @@ import Search from "./pages/Search";
 import Collection from "./pages/Collection";
 import SubSection from "./components/Content/CollectionContent/SubSection";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           </Route>
         </Route>
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </Router>
   );
