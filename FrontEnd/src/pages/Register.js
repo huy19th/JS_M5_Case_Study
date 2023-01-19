@@ -1,23 +1,23 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import logo from '../assets/logo.svg';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
-import { postUser } from '../services/login';
+import { postUser } from '../services/register';
 import { login } from '../store/User'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 export default function Login() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  // const currentUser = useSelector(selectUser);
   const [err, setErr] = useState('');
 
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
+      name: '',
+      imageUser: null
     },
     validationSchema: Yup.object({
       email: Yup.string().email('Invalid email address').required('Email Required'),
@@ -25,12 +25,11 @@ export default function Login() {
     }),
     onSubmit: async (values) => {
       try {
-        console.log(values);
-        let user = await postUser(values);
-        dispatch(login(user));
-        navigate('/');
+        console.log(values)
+        await postUser(values);
+        navigate('/login');
       }
-      catch (e) {
+      catch(e) {
         setErr(e.message);
       }
     },
@@ -49,7 +48,8 @@ export default function Login() {
                     <div className="flex justify-center">
                       <img src={logo} alt="spotify_logo" className="h-10 ml-5" />
                     </div>
-                    <hr className="mt-6 border-b-1 border-gray-400" />
+                    <h2 className="mt-3 text-gray-700 text-center font-bold">Register to access more features</h2>
+                    <hr className="mt-2 border-b-1 border-gray-400" />
                   </div>
                   <div className="flex-auto px-4 lg:px-10 py-2 pt-0">
                     <form method="post" onSubmit={formik.handleSubmit}>
@@ -58,7 +58,7 @@ export default function Login() {
                           className="block uppercase text-gray-700 text-xs font-bold mb-2"
                           htmlFor="grid-password"
                         >
-                          Email
+                          Email *
                         </label>
                         <input
                           type="email"
@@ -77,7 +77,7 @@ export default function Login() {
                           className="block uppercase text-gray-700 text-xs font-bold mb-2"
                           htmlFor="grid-password"
                         >
-                          Password
+                          Password *
                         </label>
                         <input
                           type="password"
@@ -91,18 +91,41 @@ export default function Login() {
                         ) : null}
                         {err ? <div className="text-red-500">{err}</div> : null}
                       </div>
-                      <div>
-                        <label className="inline-flex items-center cursor-pointer">
-                          <input
-                            id="customCheckLogin"
-                            type="checkbox"
-                            className="form-checkbox border-0 rounded text-gray-800 ml-1 w-5 h-5"
-                            style={{ transition: "all .15s ease" }}
-                          />
-                          <span className="ml-2 text-sm font-semibold text-gray-700">
-                            Remember me
-                          </span>
+
+                      <div className="relative w-full mb-3">
+                        <label
+                          className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                          htmlFor="grid-password"
+                        >
+                          Name
                         </label>
+                        <input
+                          type="text"
+                          className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
+                          placeholder="Name"
+                          style={{ transition: "all .15s ease" }}
+                          {...formik.getFieldProps('name')}
+                        />
+                      </div>
+
+                      <div className="relative w-full mb-3">
+                        <label
+                          className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                          htmlFor="grid-password"
+                        >
+                          Image
+                        </label>
+                        <input
+                          type="file"
+                          className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
+                          style={{ transition: "all .15s ease" }}
+                          name="imageUser"
+                          accept="image/*"
+                          onChange={e => {
+                            formik.setFieldValue('imageUser', e.currentTarget.files[0])
+                          }}
+                          
+                        />
                       </div>
 
                       <div className="text-center mt-6">
@@ -111,28 +134,19 @@ export default function Login() {
                           type="submit"
                           style={{ transition: "all .15s ease" }}
                         >
-                          Sign In
+                          Register
                         </button>
                       </div>
                     </form>
                   </div>
-                  <div className="flex flex-wrap my-5">
-                    <div className="w-1/2">
+                  <div className="flex justify-center my-3">
+                    <div>
                       <Link
-                        to="#"
+                        to="/login"
                         onClick={e => e.preventDefault()}
                         className="text-gray-900"
                       >
-                        <small className="ml-5 pl-5">Forgot password?</small>
-                      </Link>
-                    </div>
-                    <div className="w-1/2 text-right">
-                      <Link
-                        to="/register"
-                        // onClick={e => e.preventDefault()}
-                        className="text-gray-900"
-                      >
-                        <small className="mr-5 pr-5">Register account</small>
+                        <small>Already have an account? Sign In</small>
                       </Link>
                     </div>
                   </div>
