@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo.svg';
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
-import { postUser } from '../services/register';
-import { login } from '../store/User'
+import { register } from '../services/user';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -25,8 +23,7 @@ export default function Login() {
     }),
     onSubmit: async (values) => {
       try {
-        console.log(values)
-        await postUser(values);
+        await register(values);
         navigate('/login');
       }
       catch(e) {

@@ -1,6 +1,5 @@
 import User from "../models/user.model";
 import AppDataSource from "../configs/data-source";
-import SubscriptionDetail from "../models/subscriptionDetail.model";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
@@ -46,11 +45,7 @@ class AuthController {
                 httpOnly: true,
                 maxAge: 24 * 60 * 60 * 1000
             })
-            let info = { ...user };
-            delete info.password;
-            delete info.role;
             res.status(200).json({
-                user: info,
                 token: token
             });
         }
