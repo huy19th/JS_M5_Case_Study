@@ -16,7 +16,7 @@ class Artist {
     country: Country;
     @Column({ type: 'mediumtext', default: null })
     biography: string;
-    @Column({ type: 'nvarchar', length: 100, default: null })
+    @Column({ type: 'nvarchar', length: 500, default: null })
     image: string;
     @OneToMany(() => Album, album => album.artist)
     albums: Album[];

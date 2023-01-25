@@ -31,10 +31,11 @@ class ArtistController {
         }
     }
     async addArtist(req, res) {
-        let {name, biography} = req.body
+        let {name, biography, imageArtist} = req.body
         let artist = new Artist();
         artist.name = name ? name : null;
         artist.biography = biography ? biography : null;
+        artist.image = imageArtist ? imageArtist : null;
         try{
             await artistRepo.save(artist);
             res.status(200).json(artist);

@@ -22,7 +22,11 @@ dotenv.config();
 const app = express();
 const PORT = process.env.APP_PORT;
 
-app.use(cors());
+app.use(cors({
+    credentials: true,
+    origin: "http://localhost:3000",
+    methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
+}));
 app.use(cookieParser());
 app.use('/api/auth', authRouter);
 app.use('/api/song', songRouter);

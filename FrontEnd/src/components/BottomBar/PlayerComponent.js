@@ -18,7 +18,7 @@ function PlayerComponent() {
     const { current, sidebar } = useSelector((state) => state.player);
 
     const [audio, state, controls, ref] = useAudio({
-        src: current?.src,
+        src: current?.file,
     });
     //state = time(kaçıncı saniye), duration(toplam kaç saniye), paused(boolean), muted(boolean), volume(ses yüksekliği), playing(boolean)
 
