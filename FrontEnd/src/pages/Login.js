@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import logo from '../assets/logo.svg';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
-import { postUser } from '../services/login';
-import { login } from '../store/User'
+import { login } from '../services/user';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -25,8 +24,7 @@ export default function Login() {
     }),
     onSubmit: async (values) => {
       try {
-        console.log(values);
-        let user = await postUser(values);
+        await login(values);
         navigate('/');
       }
       catch (e) {
