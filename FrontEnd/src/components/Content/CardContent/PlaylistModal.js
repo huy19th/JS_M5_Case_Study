@@ -1,7 +1,15 @@
-import React from "react";
+import { useEffect, useState } from "react";
+import { getAllPlaylists } from "../../../services/playlist";
 
 export default function Modal(props) {
-    const [showModal, setShowModal] = React.useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [playlists, setPlaylists] = useState([]);
+
+    useEffect(() => {
+        getAllPlaylists().then(res => {
+            console.log(res)
+        })
+    }, [])
     return (
         <>
             <span

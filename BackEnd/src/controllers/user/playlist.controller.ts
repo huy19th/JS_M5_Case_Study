@@ -1,12 +1,11 @@
 import AppDataSource from "../../configs/data-source";
-import songModel from "../../models/song.model";
-import playListModel from "../../models/playlist.model";
-import playListDetail from "../../models/playlistDetail.model";
-import PlaylistDetailModel from "../../models/playlistDetail.model";
+import Song from "../../models/song.model";
+import PlayList from "../../models/playlist.model";
+import PlayListDetail from "../../models/playlistDetail.model";
 
-let playlistRepo = AppDataSource.getRepository(playListModel);
-let playlistDetailRepo = AppDataSource.getRepository(playListDetail);
-let songRepo = AppDataSource.getRepository(songModel);
+let playlistRepo = AppDataSource.getRepository(PlayList);
+let playlistDetailRepo = AppDataSource.getRepository(PlayListDetail);
+let songRepo = AppDataSource.getRepository(Song);
 class PlaylistController{
     async showPlayList(req,res){
         try{
@@ -17,17 +16,40 @@ class PlaylistController{
             res.status(500).json(err.message);
         }
     }
-    async addNamePlaylist(req,res){
-        let name = req.body.name;
-        let playlist = new playListModel();
+    async getAllPlaylists(req, res) {
+        try {
+            let userId = req.decoded.id;
+            let playlists = await playlistRepo.find({
+                relations: {
+                    user: true,
+                    songs: {
+                        song: true
+                    }
+                },
+                where: {
+                    user: {
+                        id: userId
+                    }
+                }
+            });
+            res.status(200).json(playlists);
+        }
+        catch (err) {
+            res.status(500).json(err.message);
+        }
+    }
+    async addPlaylist(req, res) {
+        let {name, isPrivate} = req.body;
+        let playlist = new PlayList();
         playlist.name = name ? name : null;
+        playlist.isPrivate = isPrivate ? +isPrivate : 1;
         playlist.user = req.decoded;
         try{
             await playlistRepo.save(playlist);
             res.status(200).json(playlist);
         }
         catch(err){
-            res.status(404).json(err.message);
+            res.status(404).json(err);
         }
     }
     async UpdateNamePlaylist(req,res) {
@@ -41,7 +63,7 @@ class PlaylistController{
     async addSongPlayList(req,res){
         let song = await songRepo.findOneBy({id : req.params.songId});
         let playlist = await playlistRepo.findOneBy({id : req.params.playlistId});
-        let playlistDetail = new playListDetail();
+        let playlistDetail = new PlayListDetail();
         playlistDetail.song = song;
         playlistDetail.playlist = playlist;
         try{
@@ -68,7 +90,7 @@ class PlaylistController{
         await playlistDetailRepo
             .createQueryBuilder('playlistDetails')
             .delete()
-            .from(PlaylistDetailModel)
+            .from(PlayListDetail)
             .where('id = :id', {id: req.params.id})
             .execute();
         const playlist = await playlistRepo.findOneBy({id:req.params.id});

@@ -1,7 +1,7 @@
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useSelector, useDispatch } from 'react-redux';
 import { Menu } from '@headlessui/react';
-import ModalPlaylist from './Playlist';
+import ModalPlaylist from './PlaylistModal';
 
 
 function CardMenu() {
