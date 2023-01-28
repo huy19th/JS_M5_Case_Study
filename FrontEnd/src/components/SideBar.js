@@ -6,6 +6,7 @@ import { Icon } from '../icons/Icons';
 import DownloadApp from './SideBar/DownloadApp';
 import Menu from './SideBar/Menu';
 import Playlist from './SideBar/Playlist';
+import CreatePlaylist from './SideBar/CreatePlaylist';
 import SidebarCover from './SideBar/SidebarCover';
 
 
@@ -21,29 +22,9 @@ function SideBar() {
 
       <Menu />
 
-      <nav className='mt-6'>
-        <ul>
-          <li>
-            <NavLink to={'#'} className='py-2 px-6 flex items-center group text-sm text-link font-semibold hover:text-white'>
-              <span className='w-6 h-6 flex items-center justify-center mr-4 bg-white bg-opacity-60 text-black rounded-sm group-hover:bg-opacity-100'>
-                <Icon name="plus" size={12} />
-              </span>
-              Create Playlist
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to={'#'} className='py-2 px-6 flex items-center group text-sm text-link font-semibold hover:text-white'>
-              <span className='w-6 h-6 flex items-center justify-center mr-4 bg-gradient-to-br from-purple-700 text-white to-blue-300 rounded-sm opacity-60 group-hover:opacity-100'>
-                <Icon name="heartFilled" size={12} />
-              </span>
-              Liked Songs
-            </NavLink>
-          </li>
-        </ul>
+      <CreatePlaylist />
 
-      </nav>
-
-      <Playlist />
+      {/* <Playlist /> */}
 
       <DownloadApp />
 

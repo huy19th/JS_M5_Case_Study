@@ -11,7 +11,6 @@ class PlaylistDetail {
     @ManyToOne(() => Song, song => song.playlists, {
         onDelete: 'CASCADE'
     })
-
     song: Song;
 }
 

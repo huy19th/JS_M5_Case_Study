@@ -29,7 +29,7 @@ function Menu() {
                         <span>
                             <Icon name="collection" />
                         </span>
-                        Collection
+                        Playlists
                     </NavLink>
                 </li>
             </ul>
