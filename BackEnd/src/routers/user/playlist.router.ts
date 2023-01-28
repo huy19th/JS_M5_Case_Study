@@ -7,7 +7,7 @@ let router = express.Router();
 
 router.get("/",playlistController.getAllPlaylists);
 router.post("/",upload.none(),playlistController.addPlaylist);
-router.patch("/:playlistId/song/:songId", upload.none(), playlistController.addSongPlayList);
+router.post("/:playlistId/song/:songId", playlistController.addSongPlayList);
 
 router.post("/updateName/:id",upload.none(),playlistController.UpdateNamePlaylist);
 router.delete("/delete/:id",playlistController.deleteSongPlaylist);

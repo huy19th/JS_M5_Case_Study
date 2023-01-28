@@ -6,6 +6,7 @@ import Collection from "./pages/Collection";
 import SubSection from "./components/Content/CollectionContent/SubSection";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Test from "./pages/Test";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path='artist' element={<SubSection title={"Artist"} />} />
             <Route path='albums' element={<SubSection title={"Album"} />} />
           </Route>
+          <Route path='/test' element={<Test />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

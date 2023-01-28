@@ -21,7 +21,7 @@ class PlaylistController{
             let userId = req.decoded.id;
             let playlists = await playlistRepo.find({
                 relations: {
-                    user: true,
+                    // user: true,
                     songs: {
                         song: true
                     }
@@ -60,19 +60,49 @@ class PlaylistController{
         res.status(304).json(playList)
     }
 
-    async addSongPlayList(req,res){
-        let song = await songRepo.findOneBy({id : req.params.songId});
-        let playlist = await playlistRepo.findOneBy({id : req.params.playlistId});
+    async addSongPlayList(req, res) {
+        let {songId, playlistId} = req.params;
+        let userId = req.decoded.id;
+        let playlist = await playlistRepo.findOneBy({
+                id: playlistId,
+                user: {
+                    id: userId
+                },
+        });
+
+        if (!playlist) {
+            return res.status(404).json({message: "Playlist not found"});
+        }
+
+        let song = await songRepo.findOneBy({id : songId});
+
+        if (!song) {
+            return res.status(404).json({message: "Song not found"});
+        }
+
+        let currentPlaylistDetail = await playlistDetailRepo.findOneBy({
+            playlist: {
+                id: playlistId
+            },
+            song: {
+                id: songId
+            }
+        })
+
+        if (currentPlaylistDetail) {
+            return res.status(500).json({message: "Song already in the playlist"});
+        }
+
         let playlistDetail = new PlayListDetail();
         playlistDetail.song = song;
-        playlistDetail.playlist = playlist;
+        playlistDetail.playlist = playlist
+        
         try{
             await playlistDetailRepo.save(playlistDetail)
             res.status(200).json(playlistDetail);
         }
         catch (e){
-            res.status(404).json(e.message)
-
+            res.status(404).json(e.message);
         }
     }
     async deleteSongPlaylist(req,res){

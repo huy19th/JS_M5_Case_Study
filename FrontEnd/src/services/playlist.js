@@ -30,3 +30,18 @@ export const addPlaylist = async (values) => {
         console.log(err.response.data);
     }
 }
+
+export const addSongToPlaylist = async (songId, playlistId) => {
+    try {
+        let token = localStorage.getItem('token');
+        await axios.post(`/playlist/${playlistId}/song/${songId}`, {}, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                token: token
+            }
+        });
+    }
+    catch(err) {
+        console.log(err)
+    }
+}
