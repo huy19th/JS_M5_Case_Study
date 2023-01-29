@@ -1,0 +1,1 @@
+export const playlistImage = 'https://firebasestorage.googleapis.com/v0/b/fragments-6246.appspot.com/o/imageAlbum%2FDefault.png?alt=media&token=7103fa6c-b01f-4d86-9e49-f063a040b0fa'

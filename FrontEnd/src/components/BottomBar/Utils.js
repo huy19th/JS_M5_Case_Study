@@ -1,7 +1,7 @@
 function secondToTime(seconds){
     return new Date(1000 * seconds)
     .toISOString()
-    .substr(11,8)
+    .substr(14,5)
 }
 export{
     secondToTime
