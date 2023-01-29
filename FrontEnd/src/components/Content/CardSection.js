@@ -61,7 +61,7 @@ function CardSection({ item }) {
                             </h5>
                         </div>
                         <div className={`cols-span-1 group-hover:flex group-focus:flex ${isCurrentPlaying ? 'flex' : 'hidden'}`}>
-                            <CardMenu />
+                            <CardMenu song={item}/>
                         </div>
                     </div>
 

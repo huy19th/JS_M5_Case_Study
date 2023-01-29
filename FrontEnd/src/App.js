@@ -21,6 +21,7 @@ function App() {
             <Route path='artist' element={<SubSection title={"Artist"} />} />
             <Route path='albums' element={<SubSection title={"Album"} />} />
           </Route>
+          <Route path='/test' element={<Test />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
