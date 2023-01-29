@@ -45,3 +45,18 @@ export const addSongToPlaylist = async (songId, playlistId) => {
         console.log(err)
     }
 }
+
+export const getPlaylist = async (playlistId) => {
+    try {
+        let token = localStorage.getItem('token');
+        let res = await axios.get(`/playlist/${playlistId}`, {
+            headers: {
+                token: token
+            }
+        });
+        return res.data;
+    }
+    catch(err) {
+        console.log(err.response.data.message)
+    }
+}

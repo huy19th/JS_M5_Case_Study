@@ -1,9 +1,9 @@
-import CardMenu from './CardContent/CardMenu';
+import CardMenu from '../CardContent/CardMenu';
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Icon } from '../../icons/Icons'
-import { setCurrent } from '../../store/Player'
+import { Icon } from '../../../icons/Icons'
+import { setCurrent } from '../../../store/Player'
 
 
 function CardSection({ item }) {
