@@ -46,7 +46,7 @@ function Search() {
   return (
     <>
       <section className='mb-8'>
-        <HeaderTitle title={"En çok dinlediğin türler"} seeAll={false} font={'bold'} textDecoration={'no-underline'} />
+        <HeaderTitle title={"Category"} seeAll={false} font={'bold'} textDecoration={'no-underline'} />
         <div className='relative'>
           {prev &&
             (
@@ -70,7 +70,7 @@ function Search() {
       </section>
 
       <section>
-        <HeaderTitle title={"Hepsine göz at"} seeAll={false} font={'bold'} textDecoration={'no-underline'} />
+        <HeaderTitle title={"Browse all"} seeAll={false} font={'bold'} textDecoration={'no-underline'} />
         <div className='grid grid-cols-6 gap-6'>
           {categories.map(item => <Category key={item.id} category={item} />)}
         </div>

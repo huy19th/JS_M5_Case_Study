@@ -15,7 +15,7 @@ class Playlist {
     @OneToMany(() => PlaylistDetail, playlistDetail => playlistDetail.playlist)
     songs: PlaylistDetail[];
     @Column({ type: 'boolean', default: 1 })
-    private: number;
+    isPrivate: number;
 }
 
 export default Playlist;

@@ -6,6 +6,7 @@ import Collection from "./pages/Collection";
 import SubSection from "./components/Content/CollectionContent/SubSection";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import SeeAll from "./pages/SeeAll";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<Home />}>
           <Route index element={<Main />} />
           <Route path='/search' element={<Search />} />
+          <Route path="/SeeAll/:title" element={<SeeAll />} />
           <Route path='/collection' element={<Collection />}>
             <Route path='podcast' element={<SubSection title={"Podcast"} />} />
             <Route path='artist' element={<SubSection title={"Artist"} />} />
