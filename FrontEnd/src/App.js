@@ -6,6 +6,7 @@ import Playlists from "./pages/Playlists";
 import PlaylistMain from "./components/Content/PlaylistContent/PlaylistMain";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import SeeAll from "./pages/SeeAll";
 import Test from "./pages/Test";
 
 function App() {
@@ -15,14 +16,15 @@ function App() {
         <Route path="/" element={<Home />}>
           <Route index element={<Main />} />
           <Route path='/search' element={<Search />} />
+          <Route path="/SeeAll/:title" element={<SeeAll />} />
           <Route path='/playlists'>
             <Route index element={<Playlists />} />
             <Route path=':playlistId' element={<PlaylistMain />} />
           </Route>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path='/test' element={<Test />} />
         </Route>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
       </Routes>
     </Router>
   );

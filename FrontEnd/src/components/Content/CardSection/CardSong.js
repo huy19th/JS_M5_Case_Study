@@ -37,11 +37,10 @@ function CardSection({ item }) {
             dispatch(setCurrent(item))
         }
     }
-
     return (
         <Link
             key={item.id}
-            to={'/'}
+            to={window.location.pathname}
             className="bg-footer p-4 rounded-md flex-1 hover:bg-active group"
         >
             <div>
