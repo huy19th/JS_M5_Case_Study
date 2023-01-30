@@ -1,46 +1,7 @@
-import { useEffect, useState } from "react";
-import { getAllPlaylists, addSongToPlaylist } from "../../services/playlist";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../store/User";
+import { Link } from "react-router-dom";
 import * as React from 'react';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
-
-function SimpleBackdrop({open, setOpen}) {
-  return (
-    <div>
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={open}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
-    </div>
-  );
-}
 
 export default function Modal({ showModal, setShowModal }) {
-    const [checkList, setCheckList] = useState([]);
-    const [openBackDrop, setOpenBackDrop] = useState(false);
-    let { currentUser, isLoggedIn } = useSelector(selectUser);
-
-    useEffect(() => {
-        getAllPlaylists().then(res => {
-            setCheckList(res);
-        });
-    }, [showModal])
-
-    const checkIfSongInPlaylist = (song, playlist) => {
-        let arr = playlist.filter(item => item.song.id == song.id);
-        return arr.length ? true : false;
-    }
-
-    const handleAddSongToPlaylist = async (songId, playlistId) => {
-        setOpenBackDrop(true);
-        await addSongToPlaylist(songId, playlistId);
-        setShowModal(false);
-        setOpenBackDrop(false);
-    }
 
     return (
         <>
@@ -50,28 +11,30 @@ export default function Modal({ showModal, setShowModal }) {
                         className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
                     >
                         <div className="relative w-1/4 my-6 mx-auto max-w-sm">
-                            {/*content*/}
                             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-black outline-none focus:outline-none">
-                                {/*header*/}
-                                <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                                    <h3 className="text-2xl font-semibold">
-                                        Playlists
+                                <div className="flex flex-col justify-between p-5 rounded-t">
+                                    <h3 className="text-xl font-semibold">
+                                        Sign in to unlock more features
                                     </h3>
-                                    <button
-                                        className="pl-5 pb-2 ml-auto bg-transparent border-0 text-white float-right text-3xl leading-none font-semibold outline-none focus:outline-none justify-center"
-                                        onClick={() => setShowModal(false)}
-                                    >
-                                        ×
-                                    </button>
                                 </div>
-                                {/*body*/}
-                                <div className="relative p-6 flex-auto">
-                                    <div className="checkList">
-                                    </div>
+                                <div className="relative p-6 flex flex-row-reverse">
+                                    <nav>
+                                        <button className="text-lg font-semibold px-5"
+                                            onClick={() => setShowModal(false)}
+                                        >
+                                            Later
+                                        </button>
+                                        <Link to="/login"
+                                            className="text-lg font-semibold text-black px-5 py-1 rounded-full bg-white"
+                                        >
+                                            Sign In
+                                        </Link>
+                                    </nav>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
                 </>
             ) : null
             }
