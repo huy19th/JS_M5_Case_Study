@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ComponentShelf from '../components/Content/HomeContent/ComponentShelf';
+
 import {getSong} from "../services/ListSong";
 import {getTrendingSong} from "../services/ListSong";
 import './MainLoading.css'
@@ -28,7 +29,6 @@ function Main() {
                     <ComponentShelf title={'Trending'} seeAll="/SeeAll" items={trendingSong} contentType={'song'}/>
                 </div>
             }
-
             {loading === true &&
                 <div className="row">
                     <div className="col-sm-2">

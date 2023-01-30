@@ -6,10 +6,16 @@ import { Link } from 'react-router-dom';
 import { getUser } from '../../services/user';
 import Skeleton from '@mui/material/Skeleton';
 import { selectUser, login } from '../../store/User';
+import { logout } from '../../store/User';
 
 function Auth() {
   const dispatch = useDispatch();
   let { currentUser, isLoggedIn } = useSelector(selectUser);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    dispatch(logout());
+  }
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
@@ -22,7 +28,7 @@ function Auth() {
         console.log(err);
       }
     }
-  }, [])
+  }, [isLoggedIn])
 
   if (isLoggedIn) {
     return (
@@ -51,7 +57,8 @@ function Auth() {
                 {({ active }) => (
                   <Link
                     className={`h-10 flex items-center px-2 text-sm rounded ${active && 'bg-white bg-opacity-10'}`}
-                    to={"/user/logout"}
+                    to={"#"}
+                    onClick={handleLogout}
                   >
                     Log out
                   </Link>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { getAllPlaylists, addSongToPlaylist } from "../../../services/playlist";
+import { getAllPlaylists, addSongToPlaylist } from "../../services/playlist";
 import { useSelector } from "react-redux";
-import { selectUser } from "../../../store/User";
+import { selectUser } from "../../store/User";
 import * as React from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -19,7 +19,7 @@ function SimpleBackdrop({open, setOpen}) {
   );
 }
 
-export default function Modal({ showModal, setShowModal, song }) {
+export default function Modal({ showModal, setShowModal }) {
     const [checkList, setCheckList] = useState([]);
     const [openBackDrop, setOpenBackDrop] = useState(false);
     let { currentUser, isLoggedIn } = useSelector(selectUser);
@@ -67,26 +67,6 @@ export default function Modal({ showModal, setShowModal, song }) {
                                 {/*body*/}
                                 <div className="relative p-6 flex-auto">
                                     <div className="checkList">
-                                        <div className="list-container">
-                                            {checkList.map((item, index) => (
-                                                <div key={index}
-                                                    onClick={() => {
-                                                        handleAddSongToPlaylist(song.id, item.id);
-                                                    }}
-                                                >
-                                                    <input id={`playlist-${item.id}`} value={item.id} type="checkbox"
-                                                        className={"m-2 w-4 h-4"}
-                                                        checked={checkIfSongInPlaylist(song, item.songs)}
-                                                        disabled={checkIfSongInPlaylist(song, item.songs)}
-                                                    />
-                                                    <label htmlFor={`playlist-${item.id}`}
-                                                        className={"text-lg text-center"}
-                                                    >
-                                                        {item.name}
-                                                    </label>
-                                                </div>
-                                            ))}
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -95,7 +75,6 @@ export default function Modal({ showModal, setShowModal, song }) {
                 </>
             ) : null
             }
-            <SimpleBackdrop open={openBackDrop} setOpen={setOpenBackDrop}/>
         </>
     );
 }
