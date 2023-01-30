@@ -35,7 +35,6 @@ function CardMenu({song}) {
                                     <span
                                         className={`h-10 flex items-center px-2 text-sm rounded ${active && 'bg-white bg-opacity-10'}`}
                                         onClick={() => { setShowModal(true) }}
-                                    // onBlur={close}
                                     >
                                         Add to playlist
                                     </span>

@@ -1,12 +1,14 @@
 import { NavLink } from 'react-router-dom';
 import { Icon } from '../../icons/Icons';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { addPlaylist } from '../../services/playlist';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../store/User';
+import RequireLogin from '../Content/RequireLogin';
 
-function CreatePlaylist() {
-    const [showModal, setShowModal] = useState(false);
+function PlaylistsModal({ showModal, setShowModal }) {
 
     const formik = useFormik({
         initialValues: {
@@ -25,17 +27,7 @@ function CreatePlaylist() {
     });
 
     return (
-        <nav className='mt-6'>
-            <ul>
-                <li>
-                    <NavLink to={'#'} className='py-2 px-6 flex items-center group text-sm text-link font-semibold hover:text-white' onClick={() => setShowModal(true)}>
-                        <span className='w-6 h-6 flex items-center justify-center mr-4 bg-white bg-opacity-60 text-black rounded-sm group-hover:bg-opacity-100'>
-                            <Icon name="plus" size={12} />
-                        </span>
-                        Create Playlist
-                    </NavLink>
-                </li>
-            </ul>
+        <>
             {showModal ? (
                 <>
                     <div
@@ -89,13 +81,43 @@ function CreatePlaylist() {
                                 {/*footer*/}
 
                                 {/* <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-                                </div> */}
+                        </div> */}
                             </div>
                         </div>
                     </div>
                     <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
                 </>
             ) : null}
+        </>
+    )
+
+}
+
+function CreatePlaylist() {
+    const [showModal, setShowModal] = useState(false);
+    const { isLoggedIn } = useSelector(selectUser);
+
+    useEffect(() => {}, [isLoggedIn]);
+
+    return (
+        <nav className='mt-6'>
+            <ul>
+                <li>
+                    <NavLink to={'#'}
+                        className='py-2 px-6 flex items-center group text-sm text-link font-semibold hover:text-white'
+                        onClick={() => setShowModal(true)}
+                    >
+                        <span className='w-6 h-6 flex items-center justify-center mr-4 bg-white bg-opacity-60 text-black rounded-sm group-hover:bg-opacity-100'>
+                            <Icon name="plus" size={12} />
+                        </span>
+                        Create Playlist
+                    </NavLink>
+                </li>
+            </ul>
+            {isLoggedIn ?
+                <PlaylistsModal showModal={showModal} setShowModal={setShowModal}
+                /> : <RequireLogin showModal={showModal} setShowModal={setShowModal} />}
+
         </nav>
     )
 }
