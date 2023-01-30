@@ -7,6 +7,7 @@ import SubSection from "./components/Content/CollectionContent/SubSection";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import SeeAll from "./pages/SeeAll";
+import Test from "./pages/Test";
 
 function App() {
   return (
