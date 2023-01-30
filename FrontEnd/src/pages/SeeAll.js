@@ -24,5 +24,6 @@ const SeeAll = () => {
 
         </section>
     )
+
 }
 export default SeeAll
