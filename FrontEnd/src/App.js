@@ -21,10 +21,10 @@ function App() {
             <Route index element={<Playlists />} />
             <Route path=':playlistId' element={<PlaylistMain />} />
           </Route>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
           <Route path='/test' element={<Test />} />
         </Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </Router>
   );

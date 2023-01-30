@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from '../assets/logo.svg';
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { login } from '../services/user';
 import { useFormik } from 'formik';
@@ -9,8 +8,6 @@ import * as Yup from 'yup';
 
 export default function Login() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  // const currentUser = useSelector(selectUser);
   const [err, setErr] = useState('');
 
   const formik = useFormik({
