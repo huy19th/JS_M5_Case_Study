@@ -7,18 +7,9 @@ let playlistRepo = AppDataSource.getRepository(PlayList);
 let playlistDetailRepo = AppDataSource.getRepository(PlayListDetail);
 let songRepo = AppDataSource.getRepository(Song);
 class PlaylistController{
-    async showPlayList(req,res){
-        try{
-            let playlist = await playlistDetailRepo.find();
-            res.status(200).json(playlist);
-        }
-        catch(err){
-            res.status(500).json(err.message);
-        }
-    }
+
     async getAllPlaylists(req, res) {
         try {
-            let userId = req.decoded.id;
             let playlists = await playlistRepo.find({
                 relations: {
                     // user: true,
@@ -28,7 +19,7 @@ class PlaylistController{
                 },
                 where: {
                     user: {
-                        id: userId
+                        id: req.decoded.id
                     }
                 }
             });
@@ -38,6 +29,30 @@ class PlaylistController{
             res.status(500).json(err.message);
         }
     }
+
+    async getPlaylist(req, res) {
+        let playlist = await playlistRepo.find({
+            relations: {
+                songs: {
+                    song: {
+                        artists: true,
+                        album: true
+                    }
+                }
+            },
+            where: {
+                id: req.params.playlistId,
+                user: {
+                    id: req.decoded.id
+                }
+            }
+        });
+        if (!playlist[0]) {
+            return res.status(404).json({message: "Playlist not found"})
+        }
+        res.status(200).json(playlist[0]);
+    }
+
     async addPlaylist(req, res) {
         let {name, isPrivate} = req.body;
         let playlist = new PlayList();
@@ -52,6 +67,7 @@ class PlaylistController{
             res.status(404).json(err);
         }
     }
+
     async UpdateNamePlaylist(req,res) {
         const name = req.body.name;
         const playList = await playlistRepo.findOneBy({id: req.params.id})
@@ -105,6 +121,7 @@ class PlaylistController{
             res.status(404).json(e.message);
         }
     }
+
     async deleteSongPlaylist(req,res){
         let id = await playlistDetailRepo.findOneBy({id:req.params.id});
         try {

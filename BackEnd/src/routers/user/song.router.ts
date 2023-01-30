@@ -1,6 +1,6 @@
 import express from "express";
 import multer from "multer";
-import songController from "../../controllers/user/song,controller";
+import songController from "../../controllers/user/song.controller";
 
 let upload = multer();
 let router = express.Router();

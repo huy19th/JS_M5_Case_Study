@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
-import HeaderTitle from "../components/Content/HeaderTitle";
-import CardSection from "../components/Content/CardSection";
+import CardSection from "../components/Content/CardSection/CardSong";
 import {getSong, getTrendingSong} from "../services/ListSong";
 import {useLocation, useParams} from "react-router-dom";
+import {Song} from "../components/Content/HomeContent/ContentType";
 const SeeAll = () => {
     const params = useParams();
     let title = params.title
@@ -24,5 +24,6 @@ const SeeAll = () => {
 
         </section>
     )
+
 }
 export default SeeAll

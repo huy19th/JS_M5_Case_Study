@@ -2,11 +2,6 @@ import AppDataSource from "../../configs/data-source";
 import { Like, Not, Equal } from "typeorm";
 import Song from "../../models/song.model";
 import Listen from "../../models/listen.models";
-import Artist from "../../models/artist.model";
-import Album from "../../models/album.model";
-import Country from "../../models/country.model";
-import Genre from "../../models/genre.model";
-import qs from "qs";
 
 const songRepo = AppDataSource.getRepository(Song);
 const listenRepo = AppDataSource.getRepository(Listen);
