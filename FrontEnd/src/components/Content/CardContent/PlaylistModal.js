@@ -22,12 +22,14 @@ function SimpleBackdrop({open, setOpen}) {
 export default function Modal({ showModal, setShowModal, song }) {
     const [checkList, setCheckList] = useState([]);
     const [openBackDrop, setOpenBackDrop] = useState(false);
-    let { currentUser, isLoggedIn } = useSelector(selectUser);
+    let { isLoggedIn } = useSelector(selectUser);
 
     useEffect(() => {
-        getAllPlaylists().then(res => {
+        if (isLoggedIn) {
+                    getAllPlaylists().then(res => {
             setCheckList(res);
         });
+        }
     }, [showModal])
 
     const checkIfSongInPlaylist = (song, playlist) => {

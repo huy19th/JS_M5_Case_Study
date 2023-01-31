@@ -123,7 +123,6 @@ export default function Login() {
                     <div className="w-1/2 text-right">
                       <Link
                         to="/register"
-                        // onClick={e => e.preventDefault()}
                         className="text-gray-900"
                       >
                         <small className="mr-5 pr-5">Register account</small>
