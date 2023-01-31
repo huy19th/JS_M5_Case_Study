@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import ComponentShelf from '../components/Content/HomeContent/ComponentShelf';
-
+import {getSongVietNam} from '../services/ListSong'
 import {getSong} from "../services/ListSong";
 import {getTrendingSong} from "../services/ListSong";
 import './MainLoading.css'
@@ -9,16 +9,22 @@ function Main() {
     const [loading, setLoading] = useState(true)
     const [song, setSongs] = useState([]);
     const [trendingSong, setTrendingSong] = useState([]);
+    const [songVN, setSongVN] = useState([]);
     useEffect(() => {
         getSong().then(result => {
             setSongs(result.data)
         }).then(() => {
             getTrendingSong().then(result => {
                 setTrendingSong(result.data)
-                setLoading(false)
+
+            }).then(() => {
+                getSongVietNam().then(result => {
+                    setSongVN(result.data)
+                    setLoading(false)
+                })
             })
         })
-    }, []);
+    },[]);
 
 
     return (
@@ -27,6 +33,7 @@ function Main() {
                 <div className='grid gap-y-6 pt-6'>
                     <ComponentShelf title={'Latest Songs'} seeAll="/SeeAll" items={song} contentType={'song'}/>
                     <ComponentShelf title={'Trending'} seeAll="/SeeAll" items={trendingSong} contentType={'song'}/>
+                    <ComponentShelf title={'Song VietNam'} seeAll="/SeeAll" items={songVN} contentType={'song'}/>
                 </div>
             }
             {loading === true &&
@@ -42,10 +49,9 @@ function Main() {
                     </div>
                 </div>
             }
-            </>
+        </>
     )
 }
-
 
 
 export default Main
