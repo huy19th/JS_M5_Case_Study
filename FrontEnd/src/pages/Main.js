@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from "react";
 import ComponentShelf from '../components/Content/HomeContent/ComponentShelf';
-import {getSongVietNam} from '../services/ListSong'
-import {getSong} from "../services/ListSong";
-import {getTrendingSong} from "../services/ListSong";
+
+import {getSong, getTrendingSong, getSongVietNam} from "../services/song";
 import './MainLoading.css'
 
 function Main() {

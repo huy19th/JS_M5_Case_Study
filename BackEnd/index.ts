@@ -31,13 +31,12 @@ app.use(cookieParser());
 app.use('/api/auth', authRouter);
 app.use('/api/song', songRouter);
 app.use('/api/artist', aritstRouter);
-app.use('/api/album',albumsRouter)
+app.use('/api/album',albumsRouter);
+app.use('/api/search', searchRouter);
 app.use(checkAuthentication);
 app.use('/api/user', userRouter);
 app.use('/api/playlist', playlistRouter);
 app.use('/api/subscription', buyVipRouter);
-app.use('/api/search', searchRouter);
-
 app.use(checkAuthorization);
 app.use('/api/admin/artist',adminArtistRouter)
 app.use('/api/admin/album',albumRouter);

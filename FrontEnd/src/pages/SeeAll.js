@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import CardSection from "../components/Content/CardSection/CardSong";
-import {getSongR, getTrendingSongR,getSongVietNamR} from "../services/ListSong";
+import {getAllSongs, getAllTrendingSongs, getAllSongsVietNam} from "../services/song";
 import {useLocation, useParams} from "react-router-dom";
 import {Song} from "../components/Content/HomeContent/ContentType";
 const SeeAll = () => {
@@ -10,17 +10,17 @@ const SeeAll = () => {
     useEffect(() => {
         switch(title){
             case "Latest Songs" :
-                getSongR().then(result => {
+                getAllSongs().then(result => {
                     setSongs(result.data)
                 });
                 break;
             case "Trending" :
-                getTrendingSongR().then(result => {
+                getAllTrendingSongs().then(result => {
                     setSongs(result.data)
                 });
                 break;
             case "Song VietNam" :
-                getSongVietNamR().then(result =>{
+                getAllSongsVietNam().then(result =>{
                     console.log(result);
                     setSongs(result.data)
                 })

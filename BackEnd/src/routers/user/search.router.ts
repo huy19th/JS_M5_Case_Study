@@ -6,7 +6,7 @@ import searchController from "../../controllers/user/search.controller";
 let upload = multer();
 let router = express.Router();
 
-router.get('/*', searchController.search);
+router.get('/:q', searchController.search);
 
 
 export default router;
