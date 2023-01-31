@@ -140,7 +140,6 @@ export default function Login() {
                     <div>
                       <Link
                         to="/login"
-                        onClick={e => e.preventDefault()}
                         className="text-gray-900"
                       >
                         <small>Already have an account? Sign In</small>

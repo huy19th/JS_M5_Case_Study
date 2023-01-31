@@ -19,14 +19,11 @@ function Auth() {
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
-      try {
         getUser().then(result => {
           dispatch(login(result))
-        })
-      }
-      catch (err) {
-        console.log(err);
-      }
+        }).catch(err => {
+        console.log(err.message);
+      })
     }
   }, [isLoggedIn])
 

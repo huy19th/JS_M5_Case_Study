@@ -11,7 +11,7 @@ export const getUser = async () => {
         return res.data;
     }
     catch (err) {
-        throw err;
+        throw new Error (err.response.data.message);
     }
 }
 
@@ -31,7 +31,6 @@ export const login = async user => {
     catch (e) {
         throw new Error(e.response.data.message)
     }
-    ;
 }
 
 export const register = async user => {
