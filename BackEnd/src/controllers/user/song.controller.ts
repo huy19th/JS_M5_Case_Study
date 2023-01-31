@@ -74,7 +74,7 @@ class SongController {
                   name : req.params.name
               }
             },
-            take : 12
+            take : 5
         })
         res.status(200).json(songs);
     }
@@ -116,6 +116,58 @@ class SongController {
             let song = listen.song;
             song['listen'] = listen.count;
             songs.push(song);
+        })
+        res.status(200).json(songs);
+    }
+    async getAllSongsR(req, res) {
+        let songs = await songRepo.find({
+            relations: {
+                artists: true,
+                album: true
+            },
+            where: {
+                active: 1
+            },
+        })
+        res.status(200).json(songs);
+    }
+    async getTrendingSongsR(req, res) {
+        let listens = await listenRepo.find({
+            relations: {
+                song: {
+                    album: true,
+                    artists: true  }
+            },
+            order :{
+                year: "DESC",
+                month: "DESC",
+                count: "DESC"
+            },
+            take: 30
+        })
+
+        let songs = [];
+        listens.forEach(listen => {
+            let song = listen.song;
+            song['listen'] = listen.count;
+            songs.push(song);
+        })
+        res.status(200).json(songs);
+    }
+    async getSongByCountryR(req, res) {
+        let songs = await songRepo.find({
+            relations: {
+                artists: true,
+                album: true
+            },
+            order : {
+                released : "DESC",
+            },
+            where : {
+                country : {
+                    name : req.params.name
+                }
+            },
         })
         res.status(200).json(songs);
     }

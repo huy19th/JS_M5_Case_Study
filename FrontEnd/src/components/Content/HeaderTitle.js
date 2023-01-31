@@ -5,7 +5,7 @@ function HeaderTitle({ title, seeAll = false , font , textDecoration}) {
     return (
         <>
             <div className='flex items-center justify-between mb-4'>
-                <Link to={seeAll ?? '#'}>
+                <Link to={`/SeeAll/${title}`}>
                     <h3 className={`text-2xl font-${font} text-white tracking-tight font-sans hover:${textDecoration}`}>{title}</h3>
                 </Link>
                 {seeAll && (
