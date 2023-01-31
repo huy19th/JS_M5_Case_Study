@@ -6,29 +6,88 @@ import AppDataSource from "../../configs/data-source";
 let songRepo = AppDataSource.getRepository(songModel);
 let artistRepo = AppDataSource.getRepository(artistModel);
 let albumRepo = AppDataSource.getRepository(albumModel);
-import {Like} from "typeorm"
+import { Like } from "typeorm"
 
 
 class SearchController {
-    async search(req, res) {
-        let songs = await songRepo.find({
-            where: {
-                title: Like(`%${req.query.q}%`)
-            }
-        })
-        let album = await albumRepo.find({
-            where :{name: Like(`%${req.query.q}%`)}
+    searchSongs(searchKey) {
+        let song = new Promise((resolve, reject) => {
+            let songsByTitle = songRepo.find({
+                relations: {
+                    artists: true
+                },
+                where: [
+                    { title: Like(`%${searchKey}%`) }
+                ]
+            })
 
+            let songsByAlbumName = songRepo.find({
+                relations: {
+                    artists: true
+                },
+                where: [
+                    {
+                        album: {
+                            name: Like(`%${searchKey}%`)
+                        }
+                    }
+                ]
+            })
+
+            let songsByArtistsName = songRepo.find({
+                relations: {
+                    artists: true
+                },
+                where: [
+                    {
+                        artists: {
+                            name: Like(`%${searchKey}%`)
+                        }
+                    }
+                ]
+            })
+
+            resolve({ songs: songsByTitle, albums: songsByAlbumName, artists: songsByArtistsName })
         })
-        let artist = await artistRepo.find({
-            where : {
-                name: Like(`%${req.query.q}%`)
-            }
+    }
+
+    async search(req, res) {
+
+        let songs = new Promise((resolve, reject) => {
+            resolve(songRepo.find({
+                relations: {
+                    artists: true
+                },
+                where: [
+                    { title: Like(`%${req.params.q}%`) }
+                ]
+            }))
         })
-            res.status(200).json({
-                songs: songs,
-                album: album,
-                artist: artist
+        let albums = new Promise((resolve, reject) => {
+            resolve(albumRepo.find({
+                relations: {
+                    artist: true
+                },
+                where: [
+                    { name: Like(`%${req.params.q}%`) }
+                ]
+            }))
+        })
+        let artists = new Promise((resolve, reject) => {
+            resolve(artistRepo.find({
+                where: {
+                    name: Like(`%${req.params.q}%`)
+                }
+            }))
+        })
+        Promise.all([songs, albums, artists])
+            .then(result => {
+                let [songsResult, albumsResult, artistsResult] = result;
+                res.status(200).json({
+                    songs: songsResult,
+                    albums: albumsResult,
+                    aritsts: artistsResult
+                })
             })
     }
 }

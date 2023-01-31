@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import CardSection from "../components/Content/CardSection/CardSong";
-import {getSong, getTrendingSong} from "../services/ListSong";
+import {getSong, getTrendingSong} from "../services/song";
 import {useLocation, useParams} from "react-router-dom";
 import {Song} from "../components/Content/HomeContent/ContentType";
 const SeeAll = () => {

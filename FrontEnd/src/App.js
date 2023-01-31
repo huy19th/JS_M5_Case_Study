@@ -15,7 +15,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />}>
           <Route index element={<Main />} />
-          <Route path='/search' element={<Search />} />
+          <Route path='/search' >
+            <Route index element={<Search />} />
+          </Route>
           <Route path="/SeeAll/:title" element={<SeeAll />} />
           <Route path='/playlists'>
             <Route index element={<Playlists />} />
