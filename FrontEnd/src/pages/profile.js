@@ -1,20 +1,32 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo.svg';
 import { useNavigate } from 'react-router-dom';
 import { register } from '../services/user';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import {getUser} from "../services/user";
+import {useSelector} from "react-redux";
+import {selectUser} from "../store/User";
+import {current} from "@reduxjs/toolkit";
 
 export default function Login() {
     const navigate = useNavigate();
+    const {currentUser} = useSelector(selectUser);
     const [err, setErr] = useState('');
+
+    useEffect(()=>{
+        getUser().then(result=>{
+            console.log(result);
+            console.log(currentUser.password)
+        })
+    },[])
 
     const formik = useFormik({
         initialValues: {
-            email: '',
+            email: currentUser.email,
             password: '',
-            name: '',
+            name: currentUser.name,
             imageUser: null
         },
         validationSchema: Yup.object({
@@ -45,7 +57,7 @@ export default function Login() {
                                         <div className="flex justify-center">
                                             <img src={logo} alt="spotify_logo" className="h-10 ml-5" />
                                         </div>
-                                        <h2 className="mt-3 text-gray-700 text-center font-bold">Register to access more features</h2>
+                                        <h2 className="mt-3 text-gray-700 text-center font-bold">Profile</h2>
                                         <hr className="mt-2 border-b-1 border-gray-400" />
                                     </div>
                                     <div className="flex-auto px-4 lg:px-10 py-2 pt-0">
@@ -74,26 +86,26 @@ export default function Login() {
                                                     className="block uppercase text-gray-700 text-xs font-bold mb-2"
                                                     htmlFor="grid-password"
                                                 >
-                                                    Password *
-                                                </label>
-                                                <input
-                                                    type="password"
-                                                    className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
-                                                    placeholder="Password"
-                                                    style={{ transition: "all .15s ease" }}
-                                                    {...formik.getFieldProps('password')}
-                                                />
-                                                {formik.touched.password && formik.errors.password ? (
-                                                    <div className="text-red-500">{formik.errors.password}</div>
-                                                ) : null}
-                                                {err ? <div className="text-red-500">{err}</div> : null}
-                                            </div>
+                                            {/*        Password **/}
+                                            {/*    </label>*/}
+                                            {/*    <input*/}
+                                            {/*        type="password"*/}
+                                            {/*        className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"*/}
+                                            {/*        placeholder="Password"*/}
+                                            {/*        style={{ transition: "all .15s ease" }}*/}
+                                            {/*        {...formik.getFieldProps('password')}*/}
+                                            {/*    />*/}
+                                            {/*    {formik.touched.password && formik.errors.password ? (*/}
+                                            {/*        <div className="text-red-500">{formik.errors.password}</div>*/}
+                                            {/*    ) : null}*/}
+                                            {/*    {err ? <div className="text-red-500">{err}</div> : null}*/}
+                                            {/*</div>*/}
 
-                                            <div className="relative w-full mb-3">
-                                                <label
-                                                    className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                                                    htmlFor="grid-password"
-                                                >
+                                            {/*<div className="relative w-full mb-3">*/}
+                                            {/*    <label*/}
+                                            {/*        className="block uppercase text-gray-700 text-xs font-bold mb-2"*/}
+                                            {/*        htmlFor="grid-password"*/}
+                                            {/*    >*/}
                                                     Name
                                                 </label>
                                                 <input
@@ -105,25 +117,25 @@ export default function Login() {
                                                 />
                                             </div>
 
-                                            <div className="relative w-full mb-3">
-                                                <label
-                                                    className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                                                    htmlFor="grid-password"
-                                                >
-                                                    Image
-                                                </label>
-                                                <input
-                                                    type="file"
-                                                    className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
-                                                    style={{ transition: "all .15s ease" }}
-                                                    name="imageUser"
-                                                    accept="image/*"
-                                                    onChange={e => {
-                                                        formik.setFieldValue('imageUser', e.currentTarget.files[0])
-                                                    }}
+                                            {/*<div className="relative w-full mb-3">*/}
+                                            {/*    <label*/}
+                                            {/*        className="block uppercase text-gray-700 text-xs font-bold mb-2"*/}
+                                            {/*        htmlFor="grid-password"*/}
+                                            {/*    >*/}
+                                            {/*        Image*/}
+                                            {/*    </label>*/}
+                                            {/*    <input*/}
+                                            {/*        type="file"*/}
+                                            {/*        className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"*/}
+                                            {/*        style={{ transition: "all .15s ease" }}*/}
+                                            {/*        name="imageUser"*/}
+                                            {/*        accept="image/*"*/}
+                                            {/*        onChange={e => {*/}
+                                            {/*            formik.setFieldValue('imageUser', e.currentTarget.files[0])*/}
+                                            {/*        }}*/}
 
-                                                />
-                                            </div>
+                                            {/*    />*/}
+                                            {/*</div>*/}
 
                                             <div className="text-center mt-6">
                                                 <button
@@ -131,7 +143,7 @@ export default function Login() {
                                                     type="submit"
                                                     style={{ transition: "all .15s ease" }}
                                                 >
-                                                    Register
+                                                    Save
                                                 </button>
                                             </div>
                                         </form>
@@ -139,11 +151,11 @@ export default function Login() {
                                     <div className="flex justify-center my-3">
                                         <div>
                                             <Link
-                                                to="/login"
-                                                onClick={e => e.preventDefault()}
+                                                to="/"
+                                                onClick='Cancel'
                                                 className="text-gray-900"
                                             >
-                                                <small>Already have an account? Sign In</small>
+                                                <small>Cancel</small>
                                             </Link>
                                         </div>
                                     </div>

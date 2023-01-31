@@ -7,6 +7,7 @@ import PlaylistMain from "./components/Content/PlaylistContent/PlaylistMain";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import SeeAll from "./pages/SeeAll";
+import Profile from "./pages/Profile"
 import Test from "./pages/Test";
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/user/profile" element={<Profile/>} />
         <Route path='/test' element={<Test />} />
       </Routes>
     </Router>
